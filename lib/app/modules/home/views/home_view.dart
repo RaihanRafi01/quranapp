@@ -32,12 +32,11 @@ class HomeView extends GetView<HomeController> {
                     const StatsSection(),
                     const SizedBox(height: 20),
 
-                    // Show Recent Lessons and Video Lessons if a course is selected
+                    // Show Recent Lessons and Course-Specific Lessons if a course is selected
                     if (controller.selectedCourse.value != null) ...[
-                       RecentLessonsSection(title: 'Recent Lessons'),
+                      const RecentLessonsSection(title: 'Recent Lessons'),
                       const SizedBox(height: 20),
-                      //const VideoLessonsSection(),
-                       RecentLessonsSection(title: 'Video Lessons'),
+                      RecentLessonsSection(title: controller.sectionTitle.value),
                       const SizedBox(height: 20),
                     ],
 
@@ -64,52 +63,53 @@ class TopMenuSection extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Obx(() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Obx(() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Show Back button if a course is selected, otherwise show "Menu" text
-          controller.selectedCourse.value != null
-              ? GestureDetector(
-            onTap: controller.clearSelection,
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back,
-                  color: Colors.black.withOpacity(0.8),
-                  size: 24,
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Back',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          )
-              : const Text(
-            'Menu',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.search,
-                color: Colors.black.withOpacity(0.8),
+          if (controller.selectedCourse.value != null) ...[
+            GestureDetector(
+              onTap: controller.clearSelection,
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.textBlue,
                 size: 24,
               ),
-              const SizedBox(width: 16),
-              Icon(
-                Icons.settings,
-                color: Colors.black.withOpacity(0.8),
-                size: 24,
+            ),
+            const SizedBox(height: 20),
+          ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Show the section title (e.g., Quranic Lessons, Audio Lessons, Video Lessons)
+                  Text(
+                    controller.selectedCourse.value != null
+                        ? controller.sectionTitle.value
+                        : 'Courses', // Default title when no course is selected
+                    style:  h2.copyWith(
+                      color: AppColors.textColor,
+                      fontSize: 20,
+                    ),
+                  ),
+                  // Show Back button if a course is selected
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: Colors.black.withOpacity(0.8),
+                    size: 24,
+                  ),
+                  const SizedBox(width: 16),
+                  Icon(
+                    Icons.settings,
+                    color: Colors.black.withOpacity(0.8),
+                    size: 24,
+                  ),
+                ],
               ),
             ],
           ),
@@ -311,11 +311,29 @@ class StatItem extends StatelessWidget {
 
 // Recent Lessons Section Widget
 class RecentLessonsSection extends StatelessWidget {
-  String title;
-  RecentLessonsSection({super.key,required this.title});
+  final String title;
+
+  const RecentLessonsSection({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    // Determine content based on section title
+    final isRecentLessons = title == 'Recent Lessons';
+    final lessonTitles = isRecentLessons
+        ? ['Al-Fatiha', 'Al-Baqarah']
+        : title == 'Video Lessons'
+        ? ['Tajweed Basics', 'Surah Recitation']
+        : title == 'Audio Lessons'
+        ? ['Quran Memorization', 'Tafsir Insights']
+        : ['Quranic Lesson 1', 'Quranic Lesson 2'];
+    final subtitles = isRecentLessons
+        ? ['The Opening', 'The Cow']
+        : title == 'Video Lessons'
+        ? ['Learn proper pronunciation', 'Practice with examples']
+        : title == 'Audio Lessons'
+        ? ['Memorize key verses', 'Understand meanings']
+        : ['Core Quranic teachings', 'Advanced Quranic study'];
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -334,15 +352,15 @@ class RecentLessonsSection extends StatelessWidget {
             height: 180,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 2, // Based on your image
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(right: index == 0 ? 12 : 0),
                   child: RecentLessonCard(
                     lessonNumber: index + 1,
-                    title: 'Al-Fatiha',
-                    subtitle: 'The Opening',
-                    isCompleted: index == 0,
+                    title: lessonTitles[index],
+                    subtitle: subtitles[index],
+                    isCompleted: isRecentLessons && index == 0,
                   ),
                 );
               },
@@ -375,17 +393,13 @@ class RecentLessonCard extends StatelessWidget {
       width: 242,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        /*image: const DecorationImage(
-          image: AssetImage('assets/images/home/dummy_image_1.png'), // Add your lesson background image
-          fit: BoxFit.cover,
-        ),*/
       ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: AppColors.cardBgWhite
+          color: AppColors.cardBgWhite,
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,73 +408,40 @@ class RecentLessonCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$lessonNumber. $title',
-                      style: h2.copyWith(
-                        color: AppColors.textColor,
-                        fontSize: 16,
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$lessonNumber. $title',
+                        style: h2.copyWith(
+                          color: AppColors.textColor,
+                          fontSize: 16,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '   $subtitle',
-                      style: h4.copyWith(
-                        color: AppColors.textColor,
-                        fontSize: 14,
+                      const SizedBox(height: 4),
+                      Text(
+                        '    $subtitle',
+                        style: h4.copyWith(
+                          color: AppColors.textColor,
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                SvgPicture.asset('assets/images/home/arrow_btn.svg')
+                SvgPicture.asset(
+                  'assets/images/home/arrow_btn.svg',
+                  width: 36,
+                ),
               ],
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Video Lessons Section Widget
-class VideoLessonsSection extends StatelessWidget {
-  const VideoLessonsSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Video Lessons',
-            style: h1.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Center(
-              child: Text(
-                'Video lessons will be displayed here',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -478,18 +459,21 @@ class CourseListSection extends GetView<HomeController> {
         subtitle: 'Master every word in the Quran and understand what...',
         imagePath: 'assets/images/home/dummy_image_1.png',
         isCompleted: false,
+        lessonType: 'Quranic Lessons',
       ),
       CourseItem(
         title: 'Learn Arabic with Hadith',
         subtitle: 'Learn the language of the Holy Quran and understand it without...',
         imagePath: 'assets/images/home/dummy_image_2.png',
         isCompleted: false,
+        lessonType: 'Audio Lessons',
       ),
       CourseItem(
         title: 'Learn with Islamic Videos',
         subtitle: '',
         imagePath: 'assets/images/home/dummy_image_3.png',
         isCompleted: false,
+        lessonType: 'Video Lessons',
       ),
     ];
 
@@ -516,12 +500,14 @@ class CourseItem {
   final String subtitle;
   final String imagePath;
   final bool isCompleted;
+  final String lessonType;
 
   CourseItem({
     required this.title,
     required this.subtitle,
     required this.imagePath,
     required this.isCompleted,
+    required this.lessonType,
   });
 }
 
@@ -582,7 +568,7 @@ class CourseListItem extends StatelessWidget {
             ),
 
             // Action Button
-            SvgPicture.asset('assets/images/home/arrow_btn.svg')
+            SvgPicture.asset('assets/images/home/arrow_btn.svg'),
           ],
         ),
       ),
