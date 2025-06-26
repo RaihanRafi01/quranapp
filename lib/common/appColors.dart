@@ -9,7 +9,7 @@ class AppColors {
 
   static const Color clrGreen = Color(0xFF71E698);
   static const Color cardBgWhite = Color(0xFFECEFF5);
-
+  static const Color textBlue2 = Color(0xFF1B9ADE);
 
 
 
@@ -18,6 +18,8 @@ class AppColors {
   static const Color btnTxt1 = Color(0xFFF5F5F5);
   static const Color btnTxt2 = Color(0xFF1E1E1E);
   static const Color textColor = Color(0xFF091A2F);
+  static const Color textColor2 = Color(0xFF1F739A);
+  static const Color textColor3 = Color(0xFF848484);
   static const Color textBlue = Color(0xFF1F7EF0);
   static const Color txtInput = Color(0xFFF4F5F6);
 
@@ -30,7 +32,6 @@ class AppColors {
   static const Color gray2 = Color(0xFF504F4F);
   static const Color cardBlurtext = Color(0xFFB4B4B4);
 
-  static const Color textColor2 = Color(0xFF3D619B);
   static const Color textUserColor = Color(0xFF536DC9);
   static const Color textHeader = Color(0xFF123456);
   static const Color textHeader2 = Color(0xFF283C63);

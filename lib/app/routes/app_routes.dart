@@ -7,6 +7,10 @@ abstract class Routes {
   static const ONBOARDING = _Paths.ONBOARDING;
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const SETUP_PROFILE = _Paths.SETUP_PROFILE;
+  static const QURANIC_LESSONS = _Paths.QURANIC_LESSONS;
+  static const HADITH_LESSONS = _Paths.HADITH_LESSONS;
+  static const VIDEO_LESSONS = _Paths.VIDEO_LESSONS;
+  static const IMPORTED_LESSONS = _Paths.IMPORTED_LESSONS;
 }
 
 abstract class _Paths {
@@ -15,4 +19,8 @@ abstract class _Paths {
   static const ONBOARDING = '/onboarding';
   static const AUTHENTICATION = '/authentication';
   static const SETUP_PROFILE = '/setup-profile';
+  static const QURANIC_LESSONS = '/quranic-lessons';
+  static const HADITH_LESSONS = '/hadith-lessons';
+  static const VIDEO_LESSONS = '/video-lessons';
+  static const IMPORTED_LESSONS = '/imported-lessons';
 }
