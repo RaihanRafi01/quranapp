@@ -1,23 +1,15 @@
 import 'package:get/get.dart';
 
+import '../views/home_view.dart';
+
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  var selectedCourse = Rx<CourseItem?>(null);
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void selectCourse(CourseItem course) {
+    selectedCourse.value = course;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void clearSelection() {
+    selectedCourse.value = null;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

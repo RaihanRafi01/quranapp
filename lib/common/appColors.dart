@@ -8,6 +8,8 @@ class AppColors {
   static const Color borderClr = Color(0xFFD5D8DC);
 
   static const Color clrGreen = Color(0xFF71E698);
+  static const Color cardBgWhite = Color(0xFFECEFF5);
+
 
 
 
