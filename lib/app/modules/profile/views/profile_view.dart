@@ -5,6 +5,8 @@ import 'package:quranapp/common/appColors.dart';
 import 'package:quranapp/common/widgets/customButton.dart';
 import '../../../../common/customFont.dart';
 import '../controllers/profile_controller.dart';
+// Import the popups file
+import 'profilePopUp.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -25,12 +27,12 @@ class ProfileView extends GetView<ProfileController> {
                     Text(
                       'Profile',
                       style:
-                          h3.copyWith(fontSize: 18, color: AppColors.textBlue),
+                      h3.copyWith(fontSize: 18, color: AppColors.textBlue),
                     ),
                     Text(
                       'Preview',
                       style:
-                          h3.copyWith(fontSize: 14, color: AppColors.textBlue),
+                      h3.copyWith(fontSize: 14, color: AppColors.textBlue),
                     )
                   ],
                 ),
@@ -45,18 +47,21 @@ class ProfileView extends GetView<ProfileController> {
                     padding: const EdgeInsets.all(24),
                     child: Column(
                       children: [
-                        // Profile Avatar
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.blue[100],
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            size: 40,
-                            color: Colors.blue[600],
+                        // Profile Avatar - Make it clickable
+                        GestureDetector(
+                          onTap: () => ProfilePopups.showAvatarPopup(context),
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue[100],
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              size: 40,
+                              color: Colors.blue[600],
+                            ),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -100,8 +105,8 @@ class ProfileView extends GetView<ProfileController> {
                         children: [
                           _buildMenuItem('assets/images/settings/user_icon.svg',
                               'Jamal', true, () {
-                            // Navigate to favorites
-                          }, true, false),
+                                ProfilePopups.showNameEditPopup(context);
+                              }, true, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Divider(
@@ -113,7 +118,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/venus-and-mars_icon.svg',
                               'Gender',
                               true, () {
-                            // Navigate to downloads
+                            ProfilePopups.showGenderSelectionPopup(context);
                           }, true, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -124,8 +129,8 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                           _buildMenuItem('assets/images/settings/mail_icon.svg',
                               'abc@email.com', true, () {
-                            // Navigate to downloads
-                          }, false, false),
+                                ProfilePopups.showEmailEditPopup(context);
+                              }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Divider(
@@ -134,7 +139,7 @@ class ProfileView extends GetView<ProfileController> {
                                 thickness: 2),
                           ),
                           _buildMenuItem('', 'Change Password', false, () {
-                            // Navigate to downloads
+                            ProfilePopups.showPasswordChangePopup(context);
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -144,7 +149,7 @@ class ProfileView extends GetView<ProfileController> {
                                 thickness: 2),
                           ),
                           _buildMenuItem('', 'Make Profile Private', false, () {
-                            // Navigate to downloads
+                            // Toggle privacy setting
                           }, false, true),
                         ],
                       ),
@@ -165,7 +170,7 @@ class ProfileView extends GetView<ProfileController> {
                       child: Column(
                         children: [
                           _buildMenuItem('', 'Daily Notifications', false, () {
-                            // Navigate to favorites
+                            // Toggle daily notifications
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -175,7 +180,7 @@ class ProfileView extends GetView<ProfileController> {
                                 thickness: 2),
                           ),
                           _buildMenuItem('', 'Reminder Time', false, () {
-                            // Navigate to downloads
+                            ProfilePopups.showTimeSelectionPopup(context);
                           }, false, false),
                         ],
                       ),
@@ -191,7 +196,7 @@ class ProfileView extends GetView<ProfileController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: _buildMenuItem('', 'My Daily Goal', false, () {
-                      // Navigate to assignments
+                      ProfilePopups.showDailyGoalPopup(context);
                     }, false, false),
                   ),
 
@@ -204,7 +209,7 @@ class ProfileView extends GetView<ProfileController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: _buildMenuItem('', 'Manage Subscription', false, () {
-                      // Navigate to assignments
+                      // Navigate to subscription management
                     }, false, false),
                   ),
 
@@ -223,8 +228,8 @@ class ProfileView extends GetView<ProfileController> {
                         children: [
                           _buildMenuItem('assets/images/settings/mail_icon.svg',
                               'Support', true, () {
-                            // Navigate to favorites
-                          }, false, false),
+                                // Navigate to support
+                              }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Divider(
@@ -236,7 +241,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/messages_icon.svg',
                               'Discussion',
                               true, () {
-                            // Navigate to downloads
+                            // Navigate to discussion
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -247,9 +252,9 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                           _buildMenuItem(
                               'assets/images/settings/messages_icon.svg',
-                              'What’s New',
+                              'WhatsNew',
                               true, () {
-                            // Navigate to favorites
+                            // Navigate to what's new
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -262,7 +267,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/globe_icon.svg',
                               'Website',
                               true, () {
-                            // Navigate to downloads
+                            // Navigate to website
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -275,7 +280,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/circle-help_icon.svg',
                               'Frequently Asked Questions',
                               true, () {
-                            // Navigate to favorites
+                            // Navigate to FAQ
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -288,7 +293,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/instagram_icon.svg',
                               'Instagram',
                               true, () {
-                            // Navigate to downloads
+                            // Navigate to Instagram
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -301,7 +306,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/globe_icon.svg',
                               'Terms of Use',
                               true, () {
-                            // Navigate to favorites
+                            // Navigate to Terms of Use
                           }, false, false),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -314,7 +319,7 @@ class ProfileView extends GetView<ProfileController> {
                               'assets/images/settings/globe_icon.svg',
                               'Privacy Policy',
                               true, () {
-                            // Navigate to downloads
+                            // Navigate to Privacy Policy
                           }, false, false),
                         ],
                       ),
@@ -342,18 +347,18 @@ class ProfileView extends GetView<ProfileController> {
   }
 
   Widget _buildMenuItem(
-    String icon,
-    String title,
-    bool isIcon,
-    VoidCallback onTap,
-    bool isEdit,
-    bool isToggle, {
-    bool isDestructive = false,
-  }) {
+      String icon,
+      String title,
+      bool isIcon,
+      VoidCallback onTap,
+      bool isEdit,
+      bool isToggle, {
+        bool isDestructive = false,
+      }) {
     return Container(
       //color: AppColors.listClr,
       decoration:
-          BoxDecoration(color: AppColors.listClr,borderRadius: BorderRadius.all(Radius.circular(10))),
+      BoxDecoration(color: AppColors.listClr,borderRadius: BorderRadius.all(Radius.circular(10))),
       child: ListTile(
         leading: isIcon ? SvgPicture.asset(icon) : null,
         title: Text(
@@ -366,29 +371,29 @@ class ProfileView extends GetView<ProfileController> {
         ),
         trailing: isEdit
             ? Text(
-                'Edit',
-                style: h3.copyWith(
-                  fontSize: 14,
-                  color: AppColors.blurtext,
-                ),
-              )
+          'Edit',
+          style: h3.copyWith(
+            fontSize: 14,
+            color: AppColors.blurtext,
+          ),
+        )
             : isToggle
-                ? Switch(
-                    activeColor: Colors.white,
-                    inactiveThumbColor: AppColors.textBlue,
-                    inactiveTrackColor: AppColors.btnClr2,
-                    activeTrackColor: AppColors.textBlue,
-                    value: true,
-                    // You may want to pass this as a parameter
-                    onChanged: (value) {
-                      onTap(); // Trigger onTap when toggle changes
-                    },
-                  )
-                : Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: AppColors.arrowClr,
-                  ),
+            ? Switch(
+          activeColor: Colors.white,
+          inactiveThumbColor: AppColors.textBlue,
+          inactiveTrackColor: AppColors.btnClr2,
+          activeTrackColor: AppColors.textBlue,
+          value: true,
+          // You may want to pass this as a parameter
+          onChanged: (value) {
+            onTap(); // Trigger onTap when toggle changes
+          },
+        )
+            : Icon(
+          Icons.arrow_forward_ios,
+          size: 20,
+          color: AppColors.arrowClr,
+        ),
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
