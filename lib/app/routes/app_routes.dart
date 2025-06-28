@@ -11,6 +11,10 @@ abstract class Routes {
   static const HADITH_LESSONS = _Paths.HADITH_LESSONS;
   static const VIDEO_LESSONS = _Paths.VIDEO_LESSONS;
   static const IMPORTED_LESSONS = _Paths.IMPORTED_LESSONS;
+  static const VOCABULARY = _Paths.VOCABULARY;
+  static const LEADERBOARDS = _Paths.LEADERBOARDS;
+  static const PROFILE = _Paths.PROFILE;
+  static const DASHBOARD = _Paths.DASHBOARD;
 }
 
 abstract class _Paths {
@@ -23,4 +27,8 @@ abstract class _Paths {
   static const HADITH_LESSONS = '/hadith-lessons';
   static const VIDEO_LESSONS = '/video-lessons';
   static const IMPORTED_LESSONS = '/imported-lessons';
+  static const VOCABULARY = '/vocabulary';
+  static const LEADERBOARDS = '/leaderboards';
+  static const PROFILE = '/profile';
+  static const DASHBOARD = '/dashboard';
 }

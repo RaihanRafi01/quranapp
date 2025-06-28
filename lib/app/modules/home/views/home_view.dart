@@ -55,7 +55,7 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
+     // bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }
