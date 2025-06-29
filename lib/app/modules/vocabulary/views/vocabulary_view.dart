@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
 import '../../../../common/appColors.dart';
 import '../controllers/vocabulary_controller.dart';
 import 'vocabulary_settings_view.dart';
@@ -103,7 +104,7 @@ class VocabularyView extends GetView<VocabularyController> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          // Start Quiz action
+                          Get.to(QuizView());
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent, // Transparent to show gradient
