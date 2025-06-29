@@ -148,15 +148,20 @@ class QuizView extends GetView<QuizController> {
       bool isWrongPair = false;
 
       if (isChecked) {
-        String match = isEnglish
-            ? controller.checkedPairs[item]!
-            : controller.checkedPairs.entries
-            .firstWhere((e) => e.value == item)
-            .key;
-        isCorrectPair = (pairs[item] == match && isEnglish) ||
-            (pairs.entries.any((e) => e.value == item && e.key == match) &&
-                !isEnglish);
-        isWrongPair = !isCorrectPair && isChecked;
+        String? match;
+
+        // Determine if item is English or Arabic
+        if (controller.checkedPairs.containsKey(item)) {
+          match = controller.checkedPairs[item];
+          isCorrectPair = controller.getCurrentPairs()[item] == match;
+        } else if (controller.checkedPairs.containsValue(item)) {
+          match = controller.checkedPairs.entries
+              .firstWhere((e) => e.value == item)
+              .key;
+          isCorrectPair = controller.getCurrentPairs()[match] == item;
+        }
+
+        isWrongPair = !isCorrectPair;
       }
 
       Color backgroundColor = Colors.white;
@@ -300,19 +305,19 @@ class QuizView extends GetView<QuizController> {
         width: double.infinity,
         child: Column(
           children: [
-            if (controller.currentQuestionType == 'matching')
+            if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
               Column(
                 children: [
                   CustomButton(
                     label: 'Check',
-                    onPressed: ()=> canCheck ? controller.checkPair : null,
+                    onPressed: canCheck ? controller.checkPair : () {},
                     color: canCheck ? AppColors.clrGreen2 : AppColors.btnClr2,
                     txtClr: canCheck ? Colors.white : AppColors.btnTxt2,
                   ),
                   if (!canCheck) ...[
                     const SizedBox(height: 8),
                     Text(
-                      'Please select a pair to check',
+                      'Please select one English and one Arabic word',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
@@ -321,21 +326,15 @@ class QuizView extends GetView<QuizController> {
                   ],
                 ],
               ),
-            if (controller.currentQuestionType != 'matching' || controller.checkedPairs.isNotEmpty)
+            if (controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty)
               Column(
                 children: [
                   const SizedBox(height: 10),
                   CustomButton(
                     label: 'Continue',
-                    onPressed: controller.currentQuestionType != 'matching' ? controller.submitAnswer : controller.nextQuestion,
-                    color: (controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty) ||
-                        (controller.currentQuestionType == 'matching' && controller.checkedPairs.isNotEmpty)
-                        ? AppColors.clrGreen2
-                        : AppColors.btnClr2,
-                    txtClr: (controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty) ||
-                        (controller.currentQuestionType == 'matching' && controller.checkedPairs.isNotEmpty)
-                        ? Colors.white
-                        : AppColors.btnTxt2,
+                    onPressed: controller.submitAnswer,
+                    color: AppColors.clrGreen2,
+                    txtClr: Colors.white,
                   ),
                 ],
               ),
@@ -343,7 +342,6 @@ class QuizView extends GetView<QuizController> {
         ),
       );
     } else {
-      // Result message and continue button
       return Column(
         children: [
           Container(
@@ -351,9 +349,7 @@ class QuizView extends GetView<QuizController> {
             padding: const EdgeInsets.all(16),
             margin: const EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
-              color: controller.isCorrect.value
-                  ? Colors.green[100]
-                  : Colors.red[100],
+              color: controller.isCorrect.value ? Colors.green[100] : Colors.red[100],
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: controller.isCorrect.value ? Colors.green : Colors.red,
@@ -363,26 +359,18 @@ class QuizView extends GetView<QuizController> {
             child: Row(
               children: [
                 Icon(
-                  controller.isCorrect.value
-                      ? Icons.check_circle
-                      : Icons.cancel,
-                  color: controller.isCorrect.value
-                      ? Colors.green[800]
-                      : Colors.red[800],
+                  controller.isCorrect.value ? Icons.check_circle : Icons.cancel,
+                  color: controller.isCorrect.value ? Colors.green[800] : Colors.red[800],
                   size: 24,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    controller.isCorrect.value
-                        ? 'Correct!'
-                        : 'Oops, that\'s incorrect!',
+                    controller.isCorrect.value ? 'Correct!' : 'Oops, that\'s incorrect!',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: controller.isCorrect.value
-                          ? Colors.green[800]
-                          : Colors.red[800],
+                      color: controller.isCorrect.value ? Colors.green[800] : Colors.red[800],
                     ),
                   ),
                 ),
@@ -392,8 +380,15 @@ class QuizView extends GetView<QuizController> {
           SizedBox(
             width: double.infinity,
             child: CustomButton(
-              label: 'Next',
-              onPressed: controller.nextQuestion,
+              label: controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length ? 'Continue' : 'Next',
+              onPressed: () {
+                if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length) {
+                  controller.isAnswerSubmitted.value = false; // Allow selecting another pair
+                  controller.selectedItems.clear(); // Clear selections for next pair
+                } else {
+                  controller.nextQuestion();
+                }
+              },
               color: AppColors.clrGreen2,
               txtClr: Colors.white,
             ),
@@ -402,7 +397,6 @@ class QuizView extends GetView<QuizController> {
       );
     }
   }
-
   Widget _buildCompletionScreen() {
     return Center(
       child: Padding(

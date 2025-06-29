@@ -52,49 +52,57 @@ class QuizController extends GetxController {
   }
 
   void selectMatchingItem(String item) {
-    if (isAnswerSubmitted.value || checkedPairs.containsKey(item)) return;
+    if (isAnswerSubmitted.value || checkedPairs.containsKey(item) || checkedPairs.containsValue(item)) return;
 
     if (selectedItems.contains(item)) {
       selectedItems.remove(item);
+      selectedPairs.clear(); // Clear pairs if an item is deselected
     } else {
-      selectedItems.add(item);
+      if (selectedItems.length < 2) {
+        selectedItems.add(item);
+        if (selectedItems.length == 2) {
+          String first = selectedItems[0];
+          String second = selectedItems[1];
+          bool firstIsEnglish = getCurrentPairs().keys.contains(first);
+          bool secondIsEnglish = getCurrentPairs().keys.contains(second);
 
-      if (selectedItems.length == 2) {
-        String first = selectedItems[0];
-        String second = selectedItems[1];
-        selectedPairs[first] = second;
+          if (firstIsEnglish != secondIsEnglish) {
+            String english = firstIsEnglish ? first : second;
+            String arabic = firstIsEnglish ? second : first;
+            selectedPairs[english] = arabic;
+          } else {
+            // If both are English or both are Arabic, clear the second selection
+            selectedItems.removeLast();
+            selectedPairs.clear();
+          }
+        }
       }
     }
+    print('Selected items: $selectedItems, Selected pairs: $selectedPairs');
   }
 
+
   void checkPair() {
+    print('Check paired Called');
     if (selectedItems.length == 2) {
       String first = selectedItems[0];
       String second = selectedItems[1];
       Map<String, String> currentPairs = getCurrentPairs();
 
-      // Check if the selected pair is valid (English -> Arabic or Arabic -> English)
-      bool isValidPair = false;
-      for (var entry in currentPairs.entries) {
-        if ((entry.key == first && entry.value == second) ||
-            (entry.key == second && entry.value == first)) {
-          isValidPair = true;
-          break;
-        }
-      }
+      String english = currentPairs.containsKey(first) ? first : second;
+      String arabic = currentPairs.containsKey(first) ? second : first;
 
-      // Update checkedPairs and set isCorrect
-      checkedPairs[first] = second;
+      bool isValidPair = currentPairs[english] == arabic;
+
+      checkedPairs[english] = arabic;
       isCorrect.value = isValidPair;
-      isAnswerSubmitted.value = true; // Show result UI
+      isAnswerSubmitted.value = true;
 
-      // Clear selections for the next pair
+      // Do not clear selectedItems immediately to allow UI to show feedback
       selectedPairs.clear();
-      selectedItems.clear();
 
       // Check if all pairs are matched
       if (checkedPairs.length == currentPairs.length) {
-        // Verify all pairs are correct
         bool allCorrect = true;
         for (var entry in currentPairs.entries) {
           if (checkedPairs[entry.key] != entry.value) {
@@ -104,8 +112,11 @@ class QuizController extends GetxController {
         }
         isCorrect.value = allCorrect;
       }
+
+      print('Checked pair: $english -> $arabic, isCorrect: $isValidPair, checkedPairs: $checkedPairs');
     }
   }
+
 
   void nextQuestion() {
     if (currentQuestionIndex.value < questions.length - 1) {
