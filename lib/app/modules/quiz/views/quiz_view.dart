@@ -317,41 +317,21 @@ class QuizView extends GetView<QuizController> {
       return SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10 , left : 20 , right : 20 , bottom : 40),
+          padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 40),
           child: Column(
             children: [
-              if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
-                Column(
-                  children: [
-                    CustomButton(
-                      label: 'Check',
-                      onPressed: canCheck ? controller.checkPair : () {},
-                      color: canCheck ? const Color(0xFF4CAF50) : AppColors.btnClr2,
-                      txtClr: canCheck ? Colors.white : AppColors.btnTxt2,
-                    ),
-                    if (!canCheck) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        'Please select one English and one Arabic word',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                /*Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    CustomButton(
-                      label: 'Check',
-                      onPressed: controller.submitAnswer,
-                      color: controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty ?  AppColors.clrGreen2 : AppColors.btnClr5 ,
-                      txtClr: controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty ?  Colors.white : AppColors.btnTxt5,
-                    ),
-                  ],
-                ),*/
+              CustomButton(
+                label: 'Check',
+                onPressed: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                    ? (canCheck ? controller.checkPair : () {})
+                    : (controller.selectedAnswer.value.isNotEmpty ? controller.submitAnswer : () {}),
+                color: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                    ? (canCheck ? AppColors.clrGreen2 : AppColors.btnClr5)
+                    : (controller.selectedAnswer.value.isNotEmpty ? AppColors.clrGreen2 : AppColors.btnClr5),
+                txtClr: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                    ? (canCheck ? Colors.white : AppColors.btnTxt2)
+                    : (controller.selectedAnswer.value.isNotEmpty ? Colors.white : AppColors.btnTxt5),
+              ),
             ],
           ),
         ),
