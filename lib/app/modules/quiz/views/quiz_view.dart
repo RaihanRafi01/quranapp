@@ -15,6 +15,7 @@ class QuizView extends GetView<QuizController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        bottom: false,
         child: Obx(() {
           if (controller.quizCompleted.value) {
             return _buildCompletionScreen();
@@ -26,17 +27,20 @@ class QuizView extends GetView<QuizController> {
   }
 
   Widget _buildQuizScreen() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Progress Bar
-          Obx(() => Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Progress Bar
+        Obx(() => Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
             children: [
               // Left icon
-              SvgPicture.asset(
-                  'assets/images/lessons/close-circle_icon.svg'),
+              GestureDetector(
+                onTap: ()=> Get.back(),
+                child: SvgPicture.asset(
+                    'assets/images/lessons/close-circle_icon.svg'),
+              ),
               const SizedBox(width: 20),
               // Progress Bar
               Expanded(
@@ -56,56 +60,65 @@ class QuizView extends GetView<QuizController> {
                 scale: 4,
               )
             ],
-          )),
-          const SizedBox(height: 40),
+          ),
+        )),
+        const SizedBox(height: 20),
 
-          // Question
-          Text(
+        // Question
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text(
             controller.currentQuestion,
             style: h1.copyWith(
                 fontSize: 22,
                 color: AppColors.textColor4,
                 fontWeight: FontWeight.w800),
           ),
-          const SizedBox(height: 20),
+        ),
 
-          // Arabic text or question content
-          if (controller.currentArabic.isNotEmpty) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  controller.currentArabic,
-                  style: h2.copyWith(
-                    fontSize: 32,
-                  ),
-                  textAlign: TextAlign.center,
+
+        // Arabic text or question content
+        if (controller.currentArabic.isNotEmpty) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                controller.currentArabic,
+                style: h2.copyWith(
+                  fontSize: 32,
                 ),
-                SizedBox(width: 12),
-                SvgPicture.asset('assets/images/vocabulary/audio_icon.svg')
-              ],
-            ),
-            const SizedBox(height: 30),
-          ] else ...[
-            const SizedBox(height: 10),
-          ],
-
-          // Options
-          Expanded(
-            child: Obx(() {
-              switch (controller.currentQuestionType) {
-                case 'matching':
-                  return _buildMatchingOptions();
-                default:
-                  return _buildMultipleChoiceOptions();
-              }
-            }),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(width: 12),
+              SvgPicture.asset('assets/images/vocabulary/audio_icon.svg')
+            ],
           ),
-
-          // Bottom buttons
-          Obx(() => _buildBottomButtons()),
+          const SizedBox(height: 30),
+        ] else ...[
+          const SizedBox(height: 10),
         ],
-      ),
+
+        // Options
+        Expanded(
+          child: Obx(() {
+            switch (controller.currentQuestionType) {
+              case 'matching':
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _buildMatchingOptions(),
+                );
+              default:
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _buildMultipleChoiceOptions(),
+                );
+            }
+          }),
+        ),
+
+        // Bottom buttons
+        Obx(() => _buildBottomButtons()),
+      ],
     );
   }
 
@@ -303,100 +316,128 @@ class QuizView extends GetView<QuizController> {
 
       return SizedBox(
         width: double.infinity,
-        child: Column(
-          children: [
-            if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
-              Column(
-                children: [
-                  CustomButton(
-                    label: 'Check',
-                    onPressed: canCheck ? controller.checkPair : () {},
-                    color: canCheck ? AppColors.clrGreen2 : AppColors.btnClr2,
-                    txtClr: canCheck ? Colors.white : AppColors.btnTxt2,
-                  ),
-                  if (!canCheck) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      'Please select one English and one Arabic word',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10 , left : 20 , right : 20 , bottom : 40),
+          child: Column(
+            children: [
+              if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                Column(
+                  children: [
+                    CustomButton(
+                      label: 'Check',
+                      onPressed: canCheck ? controller.checkPair : () {},
+                      color: canCheck ? const Color(0xFF4CAF50) : AppColors.btnClr2,
+                      txtClr: canCheck ? Colors.white : AppColors.btnTxt2,
+                    ),
+                    if (!canCheck) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        'Please select one English and one Arabic word',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
                       ),
+                    ],
+                  ],
+                ),
+                /*Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    CustomButton(
+                      label: 'Check',
+                      onPressed: controller.submitAnswer,
+                      color: controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty ?  AppColors.clrGreen2 : AppColors.btnClr5 ,
+                      txtClr: controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty ?  Colors.white : AppColors.btnTxt5,
                     ),
                   ],
-                ],
-              ),
-            if (controller.currentQuestionType != 'matching' && controller.selectedAnswer.value.isNotEmpty)
-              Column(
-                children: [
-                  const SizedBox(height: 10),
-                  CustomButton(
-                    label: 'Continue',
-                    onPressed: controller.submitAnswer,
-                    color: AppColors.clrGreen2,
-                    txtClr: Colors.white,
-                  ),
-                ],
-              ),
-          ],
+                ),*/
+            ],
+          ),
         ),
       );
     } else {
-      return Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: controller.isCorrect.value ? Colors.green[100] : Colors.red[100],
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: controller.isCorrect.value ? Colors.green : Colors.red,
-                width: 2,
-              ),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  controller.isCorrect.value ? Icons.check_circle : Icons.cancel,
-                  color: controller.isCorrect.value ? Colors.green[800] : Colors.red[800],
-                  size: 24,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    controller.isCorrect.value ? 'Correct!' : 'Oops, that\'s incorrect!',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: controller.isCorrect.value ? Colors.green[800] : Colors.red[800],
+      return Container
+        (color: controller.isCorrect.value
+          ? AppColors.clrGreen3 // Green for correct
+          : AppColors.clrRed2,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20 , left : 20 , right : 20 , bottom : 40),
+          child: Column(
+            children: [
+              // Feedback container with improved styling
+              Row(
+                children: [
+                  Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      color: controller.isCorrect.value
+                          ? const Color(0xFF4CAF50)
+                          : const Color(0xFFF44336),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      controller.isCorrect.value ? Icons.check : Icons.close,
+                      color: Colors.white,
+                      size: 18,
                     ),
                   ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      controller.isCorrect.value ? 'Fantastic!' : 'Oops, that\'s incorrect',
+                      style: h1.copyWith(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: controller.isCorrect.value
+                            ? AppColors.clrGreen4 // Dark green text
+                            : AppColors.clrRed4 , // Dark red text
+                      ),
+                    ),
+                  ),
+                  SvgPicture.asset('assets/images/home/share_icon.svg',color: controller.isCorrect.value
+                      ? AppColors.clrGreen4 // Dark green text
+                      : AppColors.clrRed4 ,),
+                  const SizedBox(width: 12),
+                  SvgPicture.asset('assets/images/home/flag_icon.svg',color: controller.isCorrect.value
+                      ? AppColors.clrGreen4 // Dark green text
+                      : AppColors.clrRed4,),
+                ],
+              ),
+
+              SizedBox(height: 20),
+
+              // Action button
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  label: controller.currentQuestionType == 'matching' &&
+                      controller.checkedPairs.length < controller.getCurrentPairs().length || !controller.isCorrect.value
+                      ? 'GOT IT'
+                      : 'NEXT',
+                  onPressed: () {
+                    if (controller.currentQuestionType == 'matching' &&
+                        controller.checkedPairs.length < controller.getCurrentPairs().length) {
+                      controller.isAnswerSubmitted.value = false;
+                      controller.selectedItems.clear();
+                    } else {
+                      controller.nextQuestion();
+                    }
+                  },
+                  color: controller.isCorrect.value
+                      ? AppColors.clrGreen2 // Green for correct
+                      : AppColors.clrRed, // Red for incorrect
+                  txtClr: Colors.white,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(
-            width: double.infinity,
-            child: CustomButton(
-              label: controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length ? 'Continue' : 'Next',
-              onPressed: () {
-                if (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length) {
-                  controller.isAnswerSubmitted.value = false; // Allow selecting another pair
-                  controller.selectedItems.clear(); // Clear selections for next pair
-                } else {
-                  controller.nextQuestion();
-                }
-              },
-              color: AppColors.clrGreen2,
-              txtClr: Colors.white,
-            ),
-          ),
-        ],
+        ),
       );
     }
   }
+
   Widget _buildCompletionScreen() {
     return Center(
       child: Padding(
