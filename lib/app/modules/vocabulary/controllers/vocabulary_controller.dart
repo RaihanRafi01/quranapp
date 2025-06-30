@@ -11,6 +11,13 @@ class VocabularyController extends GetxController {
   void toggleLanguage(bool value) => isEnglish.value = value;
   void toggleAbout(bool value) => showAbout.value = value;
 
+  var selectedTab = 0.obs;
+
+  // Function to set the selected tab
+  void setSelectedTab(int index) {
+    selectedTab.value = index;
+  }
+
   final count = 0.obs;
   @override
   void onInit() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
 import '../../../../common/appColors.dart';
 import '../controllers/vocabulary_controller.dart';
@@ -11,6 +11,9 @@ class VocabularyView extends GetView<VocabularyController> {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the controller
+    final VocabularyController vocabularyController = Get.put(VocabularyController());
+
     // Sample data for different tabs
     final List<Map<String, dynamic>> ourWeekWords = [
       {'arabic': 'يوم', 'english': 'day', 'isLearned': true, 'svgIcon': 'assets/images/vocabulary/tic_icon.svg'},
@@ -29,99 +32,125 @@ class VocabularyView extends GetView<VocabularyController> {
       {'arabic': 'مبارك', 'english': '', 'isLearned': false, 'svgIcon': 'assets/images/vocabulary/tic_icon.svg'},
     ];
 
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: Colors.grey[50],
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
-            onPressed: () => Get.back(),
-          ),
-          title: const Text(
-            'Vocabulary',
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GestureDetector(
-                onTap: ()=> Get.to(() => VocabularySettingsView()),
-                  child: SvgPicture.asset('assets/images/home/settings_icon.svg')),
-            )
-          ],
-          bottom: const TabBar(
-            indicatorColor: Colors.orange,
-            labelColor: Colors.black87,
-            unselectedLabelColor: Colors.black54,
-            labelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
-            tabs: [
-              Tab(text: 'Our Week'),
-              Tab(text: 'Quiz Words'),
-              Tab(text: 'All'),
-            ],
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        title: const Text(
+          'Vocabulary',
+          style: TextStyle(
+            color: Colors.black87,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        body: Stack(
-          children: [
-            // Main content (TabBarView)
-            Positioned.fill(
-              child: TabBarView(
-                children: [
-                  _buildVocabularyList(ourWeekWords),
-                  _buildVocabularyList(quizWords),
-                  _buildVocabularyList(allWords),
-                ],
-              ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GestureDetector(
+              onTap: () => Get.to(() => const VocabularySettingsView()),
+              child: SvgPicture.asset('assets/images/home/settings_icon.svg'),
             ),
-            // Fixed button at the bottom right
-            Positioned(
-              bottom: 90, // Distance from the bottom
-              right: 16, // Distance from the right edge
-              child: SafeArea(
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width,
-                  ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3, // Takes 30% of the screen width
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [AppColors.btnYellow1, AppColors.btnYellow2],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(25),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          // Main content
+          Column(
+            children: [
+              // Custom Toggle Buttons
+              Container(
+                margin: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Row(
+                    children: [
+                      _buildToggleButton(
+                        context,
+                        'Our Week',
+                        0,
+                        vocabularyController,
                       ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.to(QuizView());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent, // Transparent to show gradient
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          elevation: 0,
-                          shadowColor: Colors.transparent, // Remove shadow to avoid overlap
+                      _buildToggleButton(
+                        context,
+                        'Quiz Words',
+                        1,
+                        vocabularyController,
+                      ),
+                      _buildToggleButton(
+                        context,
+                        'All',
+                        2,
+                        vocabularyController,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Vocabulary List
+              Expanded(
+                child: Obx(() {
+                  switch (vocabularyController.selectedTab.value) {
+                    case 0:
+                      return _buildVocabularyList(ourWeekWords);
+                    case 1:
+                      return _buildVocabularyList(quizWords);
+                    case 2:
+                      return _buildVocabularyList(allWords);
+                    default:
+                      return _buildVocabularyList(ourWeekWords);
+                  }
+                }),
+              ),
+            ],
+          ),
+          // Fixed button at the bottom right
+          Positioned(
+            bottom: 90, // Distance from the bottom
+            right: 16, // Distance from the right edge
+            child: SafeArea(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width,
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3, // Takes 30% of the screen width
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [AppColors.btnYellow1, AppColors.btnYellow2],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => const QuizView());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent, // Transparent to show gradient
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                        child: const Text(
-                          'Start Quiz',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        elevation: 0,
+                        shadowColor: Colors.transparent, // Remove shadow to avoid overlap
+                      ),
+                      child: const Text(
+                        'Start Quiz',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -129,8 +158,49 @@ class VocabularyView extends GetView<VocabularyController> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildToggleButton(
+      BuildContext context,
+      String label,
+      int index,
+      VocabularyController controller,
+      ) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          controller.setSelectedTab(index);
+        },
+        child: Obx(() => Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: controller.selectedTab.value == index ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: controller.selectedTab.value == index
+                ? [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 1),
+              ),
+            ]
+                : [],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: controller.selectedTab.value == index ? FontWeight.w600 : FontWeight.normal,
+                color: controller.selectedTab.value == index ? Colors.black : Colors.grey[600],
+              ),
+            ),
+          ),
+        )),
       ),
     );
   }

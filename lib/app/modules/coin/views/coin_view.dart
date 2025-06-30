@@ -418,7 +418,7 @@ class CoinView extends GetView<CoinController> {
                 ),
                 const SizedBox(height: 12),
                 _buildAchievementItem(
-                  'assets/images/home/a1.png',
+                  'assets/images/home/a2.png',
                   '2000 learned words',
                   '50% of the Quran',
                 ),
