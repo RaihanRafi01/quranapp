@@ -48,6 +48,7 @@ class HomeView extends GetView<HomeController> {
                         // Course List (hide if course is selected)
                         if (controller.selectedCourse.value == null)
                           const CourseListSection(),
+                        SizedBox(height: 80)
                       ],
                     )),
               ),
@@ -152,26 +153,27 @@ class FeaturedCourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Background Islamic Pattern/Book Image
-        Positioned(
-          right: 0,
-          left: 0,
-          top: 0,
-          bottom: 0,
-          child: Image.asset('assets/images/home/home_banner.png', scale: 4),
-        ),
+    return AspectRatio(
+      aspectRatio: 16 / 9, // Maintain a consistent aspect ratio
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Stack(
+          fit: StackFit.expand, // Ensure children expand to fill the Stack
+          children: [
+            // Background Islamic Pattern/Book Image
+            Image.asset(
+              'assets/images/home/home_banner.png',
+              //fit: BoxFit.cover, // Ensure image covers the entire area
+              //width: double.infinity,
+              //height: double.infinity,
+            ),
 
-        // Content
-        Padding(
-          padding: const EdgeInsets.all(50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(30), // Reduced padding for better fit
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
                 children: [
                   Text(
                     title,
@@ -179,6 +181,8 @@ class FeaturedCourseCard extends StatelessWidget {
                       color: Colors.white.withOpacity(0.7),
                       fontSize: 20,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     duration,
@@ -186,35 +190,44 @@ class FeaturedCourseCard extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 36,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(
-                          child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: AppColors.clrGreen,
-                          minimumSize: Size(double.infinity, 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100)),
+                      // Fixed-size button
+                      SizedBox(
+                        width: 180.0, // Fixed width
+                        height: 40.0, // Fixed height
+                        child: ElevatedButton(
+                          onPressed: onTap ?? () {},
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: AppColors.clrGreen,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                          child: Text(
+                            buttonText,
+                            style: h2.copyWith(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        child:
-                            Text(buttonText, style: h2.copyWith(fontSize: 14)),
-                      )),
+                      ),
                       SvgPicture.asset(
                         'assets/images/home/arrow_btn.svg',
                       ),
-                      const SizedBox(width: 100),
                     ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
