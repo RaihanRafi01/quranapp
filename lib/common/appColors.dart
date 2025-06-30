@@ -17,6 +17,7 @@ class AppColors {
   static const Color clrGreen2 = Color(0xFF58CC02);
   static const Color clrGreen3 = Color(0xFFD6FFB8);
   static const Color clrGreen4 = Color(0xFF529A02);
+  static const Color clrGreen5 = Color(0xFF24AE64);
   static const Color cardBgWhite = Color(0xFFECEFF5);
   static const Color textBlue2 = Color(0xFF1B9ADE);
   static const Color dividerClr = Color(0xFFDEF1FF);

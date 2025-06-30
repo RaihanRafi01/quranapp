@@ -115,17 +115,9 @@ class TopMenuSection extends GetView<HomeController> {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.search,
-                    color: Colors.black.withOpacity(0.8),
-                    size: 24,
-                  ),
+                  SvgPicture.asset('assets/images/home/search_icon.svg'),
                   const SizedBox(width: 16),
-                  Icon(
-                    Icons.settings,
-                    color: Colors.black.withOpacity(0.8),
-                    size: 24,
-                  ),
+                  SvgPicture.asset('assets/images/home/settings_icon.svg')
                 ],
               ),
             ],

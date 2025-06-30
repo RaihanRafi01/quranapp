@@ -13,6 +13,32 @@ class QuizController extends GetxController {
   var correctPairs = <String, String>{}.obs;
   var selectedItems = <String>[].obs;
 
+
+  // Dummy results for testing
+  var answerResults = <Map<String, dynamic>>[
+    {
+      'term': 'إفطار',
+      'translation': 'Breakfast',
+      'correct': 0,
+      'wrong': 1,
+    },
+    {
+      'term': 'إفطار',
+      'translation': 'Breakfast',
+      'correct': 0,
+      'wrong': 2,
+    },
+    {
+      'term': 'إفطار',
+      'translation': 'Breakfast',
+      'correct': 1,
+      'wrong': 3,
+    },
+  ].obs;
+
+  var correctAnswersCount = 1.obs;
+  var totalQuestions = 6.obs;
+
   List<Map<String, dynamic>> questions = [
     {
       'question': 'Choose the correct translation',

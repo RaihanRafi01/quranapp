@@ -50,12 +50,12 @@ class VocabularyView extends GetView<VocabularyController> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.settings_outlined, color: Colors.black54),
-              onPressed: () {
-                Get.to(() => VocabularySettingsView());
-              },
-            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: GestureDetector(
+                onTap: ()=> Get.to(() => VocabularySettingsView()),
+                  child: SvgPicture.asset('assets/images/home/settings_icon.svg')),
+            )
           ],
           bottom: const TabBar(
             indicatorColor: Colors.orange,

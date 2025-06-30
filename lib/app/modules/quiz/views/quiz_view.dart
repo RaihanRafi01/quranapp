@@ -20,7 +20,8 @@ class QuizView extends GetView<QuizController> {
           if (controller.quizCompleted.value) {
             return _buildCompletionScreen();
           }
-          return _buildQuizScreen();
+          //return _buildQuizScreen();
+          return _buildCompletionScreen();
         }),
       ),
     );
@@ -419,48 +420,160 @@ class QuizView extends GetView<QuizController> {
   }
 
   Widget _buildCompletionScreen() {
+    final results = controller.answerResults; // [{term: 'إفطار', correct: 0, wrong: 1}, ...]
+
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.celebration,
-              size: 80,
-              color: Colors.amber[600],
+            Row(
+              children: [
+                // Left icon
+                GestureDetector(
+                  onTap: ()=> Get.back(),
+                  child: SvgPicture.asset(
+                      'assets/images/lessons/close-circle_icon.svg'),
+                ),
+                const SizedBox(width: 20),
+                // Progress Bar
+                Expanded(
+                  child: LinearProgressIndicator(
+                    value: controller.progress,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    backgroundColor: AppColors.btnClr2,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.clrGreen2),
+                    minHeight: 12,
+                  ),
+                ),
+                const SizedBox(width: 20),
+                // Right icon
+                SvgPicture.asset('assets/images/home/settings_icon.svg')
+              ],
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'Quiz Completed!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+
+            // Sad emoji
+            const Text('😢', style: TextStyle(fontSize: 48)),
+
+            const SizedBox(height: 12),
+
+            // Encouraging message
+            Text(
+              "You'll do better next time!",
+              style: h2.copyWith(
+                fontSize: 18,
+                color: AppColors.clrGreen5
               ),
             ),
+
             const SizedBox(height: 16),
-            const Text(
-              'Great job! You\'ve finished the quiz.',
-              style: TextStyle(
+
+            // Progress
+            Text(
+              "${controller.correctAnswersCount}/${controller.totalQuestions}",
+              style: h2.copyWith(
                 fontSize: 16,
-                color: Colors.black54,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 40),
-            SizedBox(
-              width: double.infinity,
-              child: CustomButton(
-                label: 'Back to Home',
-                onPressed: () => Get.back(),
-                color: AppColors.clrGreen2,
-                txtClr: Colors.white,
+                color: AppColors.clrGreen5
               ),
             ),
+
+            const SizedBox(height: 24),
+
+            // Terms Studied
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Terms Studied",
+                style: h2.copyWith(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            // Answer Result Cards
+            ...results.map((result) {
+              final term = result['term'] as String;
+              final translation = result['translation'] as String;
+              final correct = result['correct'] as int;
+              final wrong = result['wrong'] as int;
+
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[300]!),
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Term and audio icon
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              term,
+                              style: h4.copyWith(fontSize: 18),
+                            ),
+                            const SizedBox(width: 8),
+                            SvgPicture.asset('assets/images/vocabulary/audio_icon.svg'),
+                          ],
+                        ),
+                        Text(
+                          translation,
+                          style: h4.copyWith(fontSize: 18, color: Colors.black87),
+                        ),
+                      ],
+                    ),
+
+                    // Translation
+
+                    // Correct and wrong badges
+                    Row(
+                      children: [
+                        _buildResultBadge(correct, AppColors.clrGreen5),
+                        const SizedBox(width: 4),
+                        _buildResultBadge(wrong, AppColors.clrRed4),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+
+            const SizedBox(height: 30),
+
+            // Close Button
+            CustomButton(label: 'Close', onPressed: () => Get.back(), color: AppColors.btnClr1, txtClr: AppColors.btnTxt1)
           ],
         ),
       ),
     );
   }
+
+  Widget _buildResultBadge(int count, Color color) {
+    return Container(
+      width: 24,
+      height: 24,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        count.toString(),
+        style: TextStyle(
+          fontSize: 14,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
 }
