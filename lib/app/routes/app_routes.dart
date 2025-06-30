@@ -16,6 +16,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const QUIZ = _Paths.QUIZ;
+  static const COIN = _Paths.COIN;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const DASHBOARD = '/dashboard';
   static const QUIZ = '/quiz';
+  static const COIN = '/coin';
 }

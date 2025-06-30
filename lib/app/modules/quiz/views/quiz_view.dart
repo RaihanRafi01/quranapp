@@ -20,8 +20,7 @@ class QuizView extends GetView<QuizController> {
           if (controller.quizCompleted.value) {
             return _buildCompletionScreen();
           }
-          //return _buildQuizScreen();
-          return _buildCompletionScreen();
+           return _buildQuizScreen();
         }),
       ),
     );

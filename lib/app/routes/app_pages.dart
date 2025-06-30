@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/authentication/bindings/authentication_binding.dart';
 import '../modules/authentication/views/authentication_view.dart';
+import '../modules/coin/bindings/coin_binding.dart';
+import '../modules/coin/views/coin_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/hadith_lessons/bindings/hadith_lessons_binding.dart';
@@ -79,6 +81,11 @@ class AppPages {
       name: _Paths.QUIZ,
       page: () => const QuizView(),
       binding: QuizBinding(),
+    ),
+    GetPage(
+      name: _Paths.COIN,
+      page: () => const CoinView(),
+      binding: CoinBinding(),
     ),
   ];
 }

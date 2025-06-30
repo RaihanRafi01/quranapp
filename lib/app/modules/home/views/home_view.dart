@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:quranapp/app/modules/coin/views/coin_view.dart';
 import 'package:quranapp/app/modules/hadith_lessons/views/hadith_lessons_view.dart';
 import 'package:quranapp/app/modules/imported_lessons/views/imported_lessons_view.dart';
 import 'package:quranapp/app/modules/quranic_lessons/views/quranic_lessons_view.dart';
@@ -93,12 +94,8 @@ class TopMenuSection extends GetView<HomeController> {
                       onTap: controller.clearSelection,
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.arrow_back,
-                            color: Colors.black.withOpacity(0.8),
-                            size: 24,
-                          ),
-                          const SizedBox(width: 8),
+                          Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textBlue),
+                          /*const SizedBox(width: 8),
                           Text(
                             'Back',
                             style: TextStyle(
@@ -106,7 +103,7 @@ class TopMenuSection extends GetView<HomeController> {
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -240,42 +237,45 @@ class StatsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            StatItem(
-              path: 'assets/images/home/fire_icon.png',
-              count: fireCount,
-              color: const Color(0xFFFF5722),
-              label: 'Days',
-            ),
-            const SizedBox(width: 30),
-            StatItem(
-              path: 'assets/images/home/coin_icon.png',
-              count: coinCount,
-              maxCount: maxCoins,
-              color: const Color(0xFFFFCA28),
-              label: 'coins',
-            ),
-            const Spacer(),
-            const Icon(
-              Icons.chevron_right,
-              color: Colors.black,
-              size: 30,
-            ),
-          ],
+      child: GestureDetector(
+        onTap: ()=> Get.to(CoinView()),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              StatItem(
+                path: 'assets/images/home/fire_icon.png',
+                count: fireCount,
+                color: const Color(0xFFFF5722),
+                label: 'Days',
+              ),
+              const SizedBox(width: 30),
+              StatItem(
+                path: 'assets/images/home/coin_icon.png',
+                count: coinCount,
+                maxCount: maxCoins,
+                color: const Color(0xFFFFCA28),
+                label: 'coins',
+              ),
+              const Spacer(),
+              const Icon(
+                Icons.chevron_right,
+                color: Colors.black,
+                size: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
