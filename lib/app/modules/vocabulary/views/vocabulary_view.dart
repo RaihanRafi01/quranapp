@@ -75,13 +75,13 @@ class VocabularyView extends GetView<VocabularyController> {
                     children: [
                       _buildToggleButton(
                         context,
-                        'Our Week',
+                        'Quiz Words',
                         0,
                         vocabularyController,
                       ),
                       _buildToggleButton(
                         context,
-                        'Quiz Words',
+                        'Leaned Words',
                         1,
                         vocabularyController,
                       ),
