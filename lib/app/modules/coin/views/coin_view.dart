@@ -10,6 +10,9 @@ class CoinView extends GetView<CoinController> {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the controller
+    final CoinController coinController = Get.put(CoinController());
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,8 +29,8 @@ class CoinView extends GetView<CoinController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Quranic  Stats',style: h2.copyWith(fontSize: 17),),
-            SizedBox(height: 20),
+            Text('Quranic Stats', style: h2.copyWith(fontSize: 17)),
+            const SizedBox(height: 20),
             // Balance Card
             Container(
               width: double.infinity,
@@ -45,27 +48,21 @@ class CoinView extends GetView<CoinController> {
               ),
               child: Column(
                 children: [
-                  Image.asset('assets/images/home/coin_big.png',scale: 4,),
+                  Image.asset('assets/images/home/coin_big.png', scale: 4),
                   const SizedBox(height: 16),
-                  Text(
-                    '0/50 Coins',
-                    style: h1.copyWith(
-                      fontSize: 18,
-                    ),
-                  ),
+                  Obx(() => Text(
+                    '${coinController.isToday.value ? coinController.todayCoins : coinController.allTimeCoins}/50 Coins',
+                    style: h1.copyWith(fontSize: 18),
+                  )),
                   const SizedBox(height: 4),
                   Text(
                     'Keep working towards your daily goal!',
-                    style: h4.copyWith(
-                      fontSize: 16,
-                    ),
+                    style: h4.copyWith(fontSize: 16),
                   ),
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -83,42 +80,31 @@ class CoinView extends GetView<CoinController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('assets/images/home/coin_icon.png',scale: 4,),
-                  Text('Coin Balance',style: h4.copyWith(fontSize: 16)),
-                  Text('20',style: h1.copyWith(fontSize: 20)),
+                  Image.asset('assets/images/home/coin_icon.png', scale: 4),
+                  Text('Coin Balance', style: h4.copyWith(fontSize: 16)),
+                  Obx(() => Text(
+                    '${coinController.isToday.value ? coinController.todayCoins : coinController.allTimeCoins}',
+                    style: h1.copyWith(fontSize: 20),
+                  )),
                 ],
-              )
+              ),
             ),
-
             const SizedBox(height: 24),
-
             // 7 Day Activity Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '7 Day Activity',
-                  style: h1.copyWith(
-                    fontSize: 20,
-                  ),
-                ),
+                Text('7 Day Activity', style: h1.copyWith(fontSize: 20)),
                 Row(
                   children: [
-                    Text(
-                      'Quranic Mastery Method:',
-                      style: h4.copyWith(
-                        fontSize: 14,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(Icons.keyboard_arrow_right_outlined)
+                    Text('Quranic Mastery Method:', style: h4.copyWith(fontSize: 14)),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.keyboard_arrow_right_outlined),
                   ],
                 ),
-
               ],
             ),
             const SizedBox(height: 12),
-
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -134,44 +120,48 @@ class CoinView extends GetView<CoinController> {
               ),
               child: Column(
                 children: [
-                  _buildActivityItem('Learned lesson:', '1', 2),
+                  Obx(() => _buildActivityItem(
+                    'Learned lesson:',
+                    coinController.isToday.value
+                        ? coinController.todayLessons.toString()
+                        : coinController.allTimeLessons.toString(),
+                    2,
+                  )),
                   const Divider(height: 24),
-                  _buildActivityItem('Hours Listened:', '0', 1),
+                  Obx(() => _buildActivityItem(
+                    'Hours Listened:',
+                    coinController.isToday.value
+                        ? coinController.todayHoursListened.toString()
+                        : coinController.allTimeHoursListened.toString(),
+                    1,
+                  )),
                   const Divider(height: 24),
-                  _buildActivityItem('Marked as learned:', '1', 1),
+                  Obx(() => _buildActivityItem(
+                    'Marked as learned:',
+                    coinController.isToday.value
+                        ? coinController.todayMarkedLearned.toString()
+                        : coinController.allTimeMarkedLearned.toString(),
+                    1,
+                  )),
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
             // 14 Days Streak Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '14 Days Streak',
-                  style: h1.copyWith(
-                    fontSize: 20,
-                  ),
-                ),
+                Text('14 Days Streak', style: h1.copyWith(fontSize: 20)),
                 Row(
                   children: [
-                    Text(
-                      'Calendar',
-                      style: h4.copyWith(
-                        fontSize: 14,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(Icons.keyboard_arrow_right_outlined)
+                    Text('Calendar', style: h4.copyWith(fontSize: 14)),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.keyboard_arrow_right_outlined),
                   ],
                 ),
-
               ],
             ),
             const SizedBox(height: 12),
-
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -203,81 +193,29 @@ class CoinView extends GetView<CoinController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Tue',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Wed',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Thu',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Fri',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Sat',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Sun',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        'Mon',
-                        style: h4.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
+                      Text('Tue', style: h4.copyWith(fontSize: 14)),
+                      Text('Wed', style: h4.copyWith(fontSize: 14)),
+                      Text('Thu', style: h4.copyWith(fontSize: 14)),
+                      Text('Fri', style: h4.copyWith(fontSize: 14)),
+                      Text('Sat', style: h4.copyWith(fontSize: 14)),
+                      Text('Sun', style: h4.copyWith(fontSize: 14)),
+                      Text('Mon', style: h4.copyWith(fontSize: 14)),
                     ],
                   ),
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
+            // Stats Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Stats',
-                  style: h1.copyWith(
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  'View All',
-                  style: h4.copyWith(
-                    fontSize: 14,
-                  ),
-                ),
+                Text('Stats', style: h1.copyWith(fontSize: 20)),
+                Text('View All', style: h4.copyWith(fontSize: 14)),
               ],
             ),
-
-            // design here !
-
-            // Add this code at line 274 where the comment "// design here !" is located
-
             const SizedBox(height: 12),
-
-// Toggle buttons for Today/All Time
+            // Toggle buttons for Today/All Time
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
@@ -288,52 +226,75 @@ class CoinView extends GetView<CoinController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Today',
-                            style: h1.copyWith(
-                              fontSize: 16,
-                              color: Colors.black,
+                      child: GestureDetector(
+                        onTap: () {
+                          coinController.setToday(true);
+                        },
+                        child: Obx(() => Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: coinController.isToday.value ? Colors.white : Colors.transparent,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: coinController.isToday.value
+                                ? [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                offset: const Offset(0, 1),
+                              ),
+                            ]
+                                : [],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Today',
+                              style: h1.copyWith(
+                                fontSize: 16,
+                                color: coinController.isToday.value ? Colors.black : Colors.grey[600],
+                              ),
                             ),
                           ),
-                        ),
+                        )),
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Center(
-                          child: Text(
-                            'All Time',
-                            style: h4.copyWith(
-                              fontSize: 16,
-                              color: Colors.grey[600],
+                      child: GestureDetector(
+                        onTap: () {
+                          coinController.setToday(false);
+                        },
+                        child: Obx(() => Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: !coinController.isToday.value ? Colors.white : Colors.transparent,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: !coinController.isToday.value
+                                ? [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                offset: const Offset(0, 1),
+                              ),
+                            ]
+                                : [],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'All Time',
+                              style: h4.copyWith(
+                                fontSize: 16,
+                                color: !coinController.isToday.value ? Colors.black : Colors.grey[600],
+                              ),
                             ),
                           ),
-                        ),
+                        )),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
-
-// Stats Grid
+            // Stats Grid
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -356,72 +317,47 @@ class CoinView extends GetView<CoinController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Coins',
-                              style: h3.copyWith(
-                                fontSize: 14,
-                              ),
-                            ),
+                            Text('Coins', style: h3.copyWith(fontSize: 14)),
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                Image.asset(
-                                  'assets/images/home/coin_icon.png',
-                                  scale: 6,
-                                ),
+                                Image.asset('assets/images/home/coin_icon.png', scale: 6),
                                 const SizedBox(width: 8),
-                                Text(
-                                  '8',
-                                  style: h1.copyWith(
-                                    fontSize: 18,
-                                  ),
-                                ),
+                                Obx(() => Text(
+                                  coinController.isToday.value
+                                      ? coinController.todayCoins.toString()
+                                      : coinController.allTimeCoins.toString(),
+                                  style: h1.copyWith(fontSize: 18),
+                                )),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      Container(
-                        width: 1,
-                        height: 60,
-                        color: Colors.grey[200],
-                      ),
+                      Container(width: 1, height: 60, color: Colors.grey[200]),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Known Words',
-                                style: h3.copyWith(
-                                  fontSize: 14,
-                                ),
-                              ),
+                              Text('Known Words', style: h3.copyWith(fontSize: 14)),
                               const SizedBox(height: 8),
-                              Text(
-                                '0',
-                                style: h1.copyWith(
-                                  fontSize: 18,
-                                ),
-                              ),
+                              Obx(() => Text(
+                                coinController.isToday.value
+                                    ? coinController.todayKnownWords.toString()
+                                    : coinController.allTimeKnownWords.toString(),
+                                style: h1.copyWith(fontSize: 18),
+                              )),
                             ],
                           ),
                         ),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 16),
-
-                  // Divider
-                  Container(
-                    height: 1,
-                    color: Colors.grey[200],
-                  ),
-
+                  Container(height: 1, color: Colors.grey[200]),
                   const SizedBox(height: 16),
-
                   // Second Row
                   Row(
                     children: [
@@ -429,46 +365,32 @@ class CoinView extends GetView<CoinController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Study Time',
-                              style: h3.copyWith(
-                                fontSize: 14,
-                              ),
-                            ),
+                            Text('Study Time', style: h3.copyWith(fontSize: 14)),
                             const SizedBox(height: 8),
-                            Text(
-                              '00:00',
-                              style: h1.copyWith(
-                                fontSize: 18,
-                              ),
-                            ),
+                            Obx(() => Text(
+                              coinController.isToday.value
+                                  ? coinController.todayStudyTime.value
+                                  : coinController.allTimeStudyTime.value,
+                              style: h1.copyWith(fontSize: 18),
+                            )),
                           ],
                         ),
                       ),
-                      Container(
-                        width: 1,
-                        height: 60,
-                        color: Colors.grey[200],
-                      ),
+                      Container(width: 1, height: 60, color: Colors.grey[200]),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Hours listened',
-                                style: h3.copyWith(
-                                  fontSize: 14,
-                                ),
-                              ),
+                              Text('Hours listened', style: h3.copyWith(fontSize: 14)),
                               const SizedBox(height: 8),
-                              Text(
-                                '0.00 +',
-                                style: h1.copyWith(
-                                  fontSize: 18,
-                                ),
-                              ),
+                              Obx(() => Text(
+                                coinController.isToday.value
+                                    ? '${coinController.todayHoursListened} +'
+                                    : '${coinController.allTimeHoursListened} +',
+                                style: h1.copyWith(fontSize: 18),
+                              )),
                             ],
                           ),
                         ),
@@ -478,22 +400,15 @@ class CoinView extends GetView<CoinController> {
                 ],
               ),
             ),
-
             // Achievements Section
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Level',
-                  style: h1.copyWith(
-                    fontSize: 20,
-                  ),
-                ),
+                Text('Level', style: h1.copyWith(fontSize: 20)),
               ],
             ),
             const SizedBox(height: 12),
-
             Column(
               children: [
                 _buildAchievementItem(
@@ -545,68 +460,23 @@ class CoinView extends GetView<CoinController> {
       children: [
         Row(
           children: [
-            Text(
-              title,
-              style: h4.copyWith(
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(width: 10,),
-            Text(
-              count,
-              style: h1.copyWith(
-                fontSize: 16,
-              ),
-            ),
+            Text(title, style: h4.copyWith(fontSize: 16)),
+            const SizedBox(width: 10),
+            Text(count, style: h1.copyWith(fontSize: 16)),
           ],
         ),
         Row(
           children: [
-            Text(
-              'Attention',
-              style: h1.copyWith(
-                fontSize: 16,
-                color: AppColors.textBlue
-              ),
-            ),
+            Text('Attention', style: h1.copyWith(fontSize: 16, color: AppColors.textBlue)),
             const SizedBox(width: 4),
-            Icon(Icons.keyboard_arrow_right_outlined)
+            const Icon(Icons.keyboard_arrow_right_outlined),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildStreakDay(String day, bool isActive) {
-    return Column(
-      children: [
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: isActive ? Colors.orange : Colors.grey[200],
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Center(
-            child: Text(
-              day,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: isActive ? Colors.white : Colors.grey,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAchievementItem(
-      String path,
-      String title,
-      String subtitle,
-      ) {
+  Widget _buildAchievementItem(String path, String title, String subtitle) {
     return Container(
       width: double.maxFinite,
       padding: const EdgeInsets.all(16),
@@ -615,7 +485,7 @@ class CoinView extends GetView<CoinController> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -623,12 +493,12 @@ class CoinView extends GetView<CoinController> {
       ),
       child: Column(
         children: [
-          Text(title,style: h4.copyWith(fontSize: 20)),
+          Text(title, style: h4.copyWith(fontSize: 20)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Image.asset(path,scale: 4,),
+            child: Image.asset(path, scale: 4),
           ),
-          Text(subtitle,style: h4.copyWith(fontSize: 20)),
+          Text(subtitle, style: h4.copyWith(fontSize: 20)),
         ],
       ),
     );
