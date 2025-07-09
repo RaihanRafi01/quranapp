@@ -9,9 +9,11 @@ class AppColors {
   static const Color btnClr5 = Color(0xFFE5E5E5);
   static const Color btnTxt5 = Color(0xFFAFAFAF);
   static const Color borderClr = Color(0xFFD5D8DC);
+  static const Color borderClr2 = Color(0xFFEBEBEB);
 
   static const Color clrGreen = Color(0xFF71E698);
   static const Color clrRed = Color(0xFFFF4B4B);
+  static const Color clrRed3 = Color(0xFFCA4649);
   static const Color clrRed2 = Color(0xFFFFDFE0);
   static const Color clrRed4 = Color(0xFFEA2B2B);
   static const Color clrGreen2 = Color(0xFF58CC02);
@@ -34,11 +36,14 @@ class AppColors {
   static const Color textColor2 = Color(0xFF1F739A);
   static const Color textColor3 = Color(0xFF848484);
   static const Color textColor4 = Color(0xFF4B4B4B);
+  static const Color textColor5 = Color(0xFF5A6168);
+  static const Color textColor6 = Color(0xFF687D8B);
   static const Color textBlue = Color(0xFF1F7EF0);
   static const Color textBlue3 = Color(0xFF5E9BC9);
   static const Color txtInput = Color(0xFFF4F5F6);
   static const Color btnYellow1 = Color(0xFFFFB03C);
   static const Color btnYellow2 = Color(0xFFFFD535);
+  static const Color blueDeep = Color(0xFF247BA0);
 
 
 

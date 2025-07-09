@@ -80,7 +80,7 @@ class TopMenuSection extends GetView<HomeController> {
                   Text(
                     controller.selectedCourse.value != null
                         ? controller.sectionTitle.value
-                        : 'Courses',
+                        : 'Menu',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -596,43 +596,49 @@ class CourseListItem extends StatelessWidget {
           color: AppColors.btnClr2,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Row(
+        child: Stack(
           children: [
-            // Course Image/Icon
-            Image.asset(courseItem.imagePath),
-
-            const SizedBox(width: 16),
-
-            // Course Details
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    courseItem.title,
-                    style: h1.copyWith(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                  if (courseItem.subtitle.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      courseItem.subtitle,
-                      style: h4.copyWith(
-                        color: Colors.black.withOpacity(0.6),
-                        fontSize: 14,
+            // Main content (Image and Course Details)
+            Row(
+              children: [
+                // Course Image/Icon
+                Image.asset(courseItem.imagePath),
+                const SizedBox(width: 16),
+                // Course Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        courseItem.title,
+                        style: h1.copyWith(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ],
-              ),
+                      if (courseItem.subtitle.isNotEmpty) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          courseItem.subtitle,
+                          style: h4.copyWith(
+                            color: Colors.black.withOpacity(0.6),
+                            fontSize: 14,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
             ),
-
-            // Action Button
-            SvgPicture.asset('assets/images/home/arrow_btn.svg'),
+            // Action Button (SVG) at Bottom Right
+            Positioned(
+              bottom: 0, // Adjust distance from bottom
+              right: 0, // Adjust distance from right
+              child: SvgPicture.asset('assets/images/home/arrow_btn.svg'),
+            ),
           ],
         ),
       ),

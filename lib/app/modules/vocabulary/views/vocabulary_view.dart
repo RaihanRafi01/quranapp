@@ -64,7 +64,7 @@ class VocabularyView extends GetView<VocabularyController> {
             children: [
               // Custom Toggle Buttons
               Container(
-                margin: const EdgeInsets.all(16),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(10),
@@ -81,7 +81,7 @@ class VocabularyView extends GetView<VocabularyController> {
                       ),
                       _buildToggleButton(
                         context,
-                        'Leaned Words',
+                        'Leaned  Words',
                         1,
                         vocabularyController,
                       ),
@@ -176,7 +176,7 @@ class VocabularyView extends GetView<VocabularyController> {
           controller.setSelectedTab(index);
         },
         child: Obx(() => Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: controller.selectedTab.value == index ? Colors.white : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
@@ -194,7 +194,7 @@ class VocabularyView extends GetView<VocabularyController> {
             child: Text(
               label,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: controller.selectedTab.value == index ? FontWeight.w600 : FontWeight.normal,
                 color: controller.selectedTab.value == index ? Colors.black : Colors.grey[600],
               ),
@@ -211,7 +211,7 @@ class VocabularyView extends GetView<VocabularyController> {
         return ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: words.length,
-          separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.grey),
+          separatorBuilder: (context, index) => const Divider(height: 0.5, color: AppColors.btnClr3),
           itemBuilder: (context, index) {
             return _buildVocabularyItem(
               arabic: words[index]['arabic'],
@@ -235,9 +235,59 @@ class VocabularyView extends GetView<VocabularyController> {
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
-          // SVG Icon
-          SvgPicture.asset(
-            svgIcon,
+          // SVG Icon with PopupMenuButton
+          PopupMenuButton<String>(
+            offset: const Offset(130, -30), // Positions popup to the right of the icon
+            color: Colors.white, // Sets white background for the popup
+            onSelected: (value) {
+              // Handle menu actions
+              switch (value) {
+                case 'learned':
+                // Mark as learned
+                  break;
+                case 'ignore':
+                // Ignore word
+                  break;
+                case 'review':
+                // Review word
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'learned',
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images/vocabulary/tic_icon.svg'),
+                    const SizedBox(width: 8),
+                    const Text('Mark as learned'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'ignore',
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images/vocabulary/ignore_icon.svg'),
+                    const SizedBox(width: 8),
+                    const Text('Ignore word'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'review',
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images/vocabulary/review_icon.svg'),
+                    const SizedBox(width: 8),
+                    const Text('Review word'),
+                  ],
+                ),
+              ),
+            ],
+            child: SvgPicture.asset(
+              svgIcon,
+            ),
           ),
           const SizedBox(width: 16),
           // Word content
@@ -272,60 +322,6 @@ class VocabularyView extends GetView<VocabularyController> {
                   ),
               ],
             ),
-          ),
-          // Action Menu
-          PopupMenuButton<String>(
-            color: Colors.white,
-            icon: Icon(
-              Icons.more_horiz,
-              color: Colors.grey[600],
-            ),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'learned',
-                child: Row(
-                  children: [
-                    SvgPicture.asset('assets/images/vocabulary/tic_icon.svg'),
-                    const SizedBox(width: 8),
-                    const Text('Mark as learned'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'ignore',
-                child: Row(
-                  children: [
-                    SvgPicture.asset('assets/images/vocabulary/ignore_icon.svg'),
-                    const SizedBox(width: 8),
-                    const Text('Ignore word'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'review',
-                child: Row(
-                  children: [
-                    SvgPicture.asset('assets/images/vocabulary/review_icon.svg'),
-                    const SizedBox(width: 8),
-                    const Text('Review word'),
-                  ],
-                ),
-              ),
-            ],
-            onSelected: (value) {
-              // Handle menu actions
-              switch (value) {
-                case 'learned':
-                // Mark as learned
-                  break;
-                case 'ignore':
-                // Ignore word
-                  break;
-                case 'review':
-                // Review word
-                  break;
-              }
-            },
           ),
         ],
       ),

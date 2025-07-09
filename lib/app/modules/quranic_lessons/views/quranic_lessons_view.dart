@@ -36,14 +36,11 @@ class QuranicLessonsView extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios, size: 18, color: Colors.black87),
+                  icon: const Icon(Icons.arrow_back_ios, size: 24, color: AppColors.textBlue2),
                   onPressed: () => Get.back(),
                 ),
                 const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.settings, size: 22, color: Colors.black87),
-                  onPressed: () {},
-                ),
+                SvgPicture.asset('assets/images/home/settings_icon.svg')
               ],
             ),
           ),
@@ -94,67 +91,55 @@ class QuranicLessonsView extends StatelessWidget {
                     ],
                   ),
                   Positioned(
-                    top: 90,
-                    left: 90,
-                    right: 90,
+                    top: 100,
+                    left: 80,
+                    right: 80,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // Info Icon and Duration
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(
-                                  Icons.info,
-                                  size: 24,
-                                  color: AppColors.textBlue2,
-                                ),
+                                SvgPicture.asset('assets/images/vocabulary/info_icon.svg'),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                   decoration: BoxDecoration(
                                     color: Colors.orange,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Text(
-                                    "1/50",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset('assets/images/vocabulary/lock_icon.svg'),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        "1/50",
+                                        style: h4.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          const Icon(
-                            Icons.volume_up,
-                            size: 16,
-                            color: AppColors.textBlue2,
-                          ),
+                          const SizedBox(height: 50),
+                          SvgPicture.asset('assets/images/vocabulary/audio_icon.svg',color: AppColors.textBlue2,),
                           SizedBox(height: 16),
-                          const Text(
+                          Text(
                             "سُبْحَانَ اللَّهِ",
-                            style: TextStyle(
-                              fontSize: 16,
+                            style: h4.copyWith(
+                              fontSize: 24,
                               color: AppColors.textBlue2,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -167,9 +152,29 @@ class QuranicLessonsView extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 22),
+                          const SizedBox(height: 50),
+                          Container(
+                            height: 50,
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              color: AppColors.textBlue2,
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(10), // Rounded bottom-left corner
+                                bottomRight: Radius.circular(10), // Rounded bottom-right corner
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Add to Quiz List',
+                                style: h4.copyWith(
+                                  fontSize: 18,
+                                  color: Colors.white, // Adjust text color for visibility on cyan
+                                ),
+                              ),
+                            ),
+                          ),
                           // Add to Quiz List Button
-                          SizedBox(
+                          /*SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () => controller.showPlayer(),
@@ -177,7 +182,7 @@ class QuranicLessonsView extends StatelessWidget {
                                 backgroundColor: AppColors.textBlue2,
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
                                 ),
                                 elevation: 0,
                               ),
@@ -189,7 +194,7 @@ class QuranicLessonsView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -289,10 +294,9 @@ class QuranicLessonsView extends StatelessWidget {
             children: [
               Text(
                 ayahNumber,
-                style: const TextStyle(
+                style: h4.copyWith(
                   fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  color: AppColors.textColor5,
                 ),
               ),
               const Spacer(),
@@ -301,17 +305,18 @@ class QuranicLessonsView extends StatelessWidget {
           const SizedBox(height: 16),
           // Arabic Words with English Translation
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(arabicWords.length, (index) {
-              return Expanded(
-                child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              for (int index = 0; index < arabicWords.length; index++) ...[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       arabicWords[index],
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: Colors.green,
+                        color: Colors.black,
                         height: 1.3,
                       ),
                       textAlign: TextAlign.center,
@@ -319,58 +324,33 @@ class QuranicLessonsView extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       englishWords[index],
-                      style: const TextStyle(
+                      style: h4.copyWith(
                         fontSize: 12,
-                        color: Colors.black54,
+                        color: AppColors.textColor5,
                         height: 1.2,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-              );
-            }),
+                if (index < arabicWords.length - 1) const SizedBox(width: 20), // Fixed width gap between Columns
+              ],
+            ],
           ),
           const SizedBox(height: 20),
           // Description Text
-          const Text(
+          Text(
             "In the name of Allah, the Most Gracious, the Most Merciful",
-            style: TextStyle(
+            style: h4.copyWith(
               fontSize: 14,
-              color: Colors.black87,
+              color: AppColors.textColor6,
               height: 1.4,
             ),
           ),
+          const SizedBox(height: 20),
+          const Divider(height: 0.5, color: AppColors.borderClr2),
         ],
       ),
-    );
-  }
-
-
-  Widget _buildWordColumn(String arabicText, String englishText) {
-    return Column(
-      children: [
-        Text(
-          arabicText,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.green,
-            height: 1.3,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 12),
-        Text(
-          englishText,
-          style: const TextStyle(
-            fontSize: 13,
-            color: Colors.black54,
-            height: 1.2,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
     );
   }
 }

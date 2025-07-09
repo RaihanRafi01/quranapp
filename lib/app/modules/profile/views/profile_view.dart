@@ -50,19 +50,7 @@ class ProfileView extends GetView<ProfileController> {
                         // Profile Avatar - Make it clickable
                         GestureDetector(
                           onTap: () => ProfilePopups.showAvatarPopup(context),
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue[100],
-                            ),
-                            child: Icon(
-                              Icons.person,
-                              size: 40,
-                              color: Colors.blue[600],
-                            ),
-                          ),
+                          child: SvgPicture.asset('assets/images/settings/profile_icon.svg')
                         ),
                         const SizedBox(height: 16),
                         Padding(
