@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:quranapp/app/modules/dashboard/views/dashboard_view.dart';
 
 class SetupProfileController extends GetxController {
   var currentStep = 0.obs;
@@ -44,6 +45,6 @@ class SetupProfileController extends GetxController {
   }
 
   void completeOnboarding() {
-    Get.offAllNamed('/home'); // Adjust route as needed
+    Get.offAll(DashboardView());
   }
 }
