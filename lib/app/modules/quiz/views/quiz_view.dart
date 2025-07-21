@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/common/widgets/customButton.dart';
@@ -20,7 +21,7 @@ class QuizView extends GetView<QuizController> {
           if (controller.quizCompleted.value) {
             return _buildCompletionScreen();
           }
-           return _buildQuizScreen();
+          return _buildQuizScreen();
         }),
       ),
     );
@@ -32,50 +33,55 @@ class QuizView extends GetView<QuizController> {
       children: [
         // Progress Bar
         Obx(() => Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.w), // Responsive padding
           child: Row(
             children: [
               // Left icon
               GestureDetector(
-                onTap: ()=> Get.back(),
+                onTap: () => Get.back(),
                 child: SvgPicture.asset(
-                    'assets/images/lessons/close-circle_icon.svg'),
+                  'assets/images/lessons/close-circle_icon.svg',
+                  width: 24.w, // Responsive SVG width
+                  height: 24.h, // Responsive SVG height
+                ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: 20.w), // Responsive spacing
               // Progress Bar
               Expanded(
                 child: LinearProgressIndicator(
                   value: controller.progress,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.r)), // Responsive border radius
                   backgroundColor: AppColors.btnClr2,
                   valueColor: const AlwaysStoppedAnimation<Color>(
                       AppColors.clrGreen2),
-                  minHeight: 12,
+                  minHeight: 12.h, // Responsive height
                 ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: 20.w), // Responsive spacing
               // Right icon
               Image.asset(
                 'assets/images/lessons/emoji_icon.png',
                 scale: 4,
-              )
+                width: 24.w, // Responsive image width
+                height: 24.h, // Responsive image height
+              ),
             ],
           ),
         )),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h), // Responsive spacing
 
         // Question
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.w), // Responsive padding
           child: Text(
             controller.currentQuestion,
             style: h1.copyWith(
-                fontSize: 22,
-                color: AppColors.textColor4,
-                fontWeight: FontWeight.w800),
+              fontSize: 22.sp, // Responsive font size
+              color: AppColors.textColor4,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
-
 
         // Arabic text or question content
         if (controller.currentArabic.isNotEmpty) ...[
@@ -85,17 +91,21 @@ class QuizView extends GetView<QuizController> {
               Text(
                 controller.currentArabic,
                 style: h2.copyWith(
-                  fontSize: 32,
+                  fontSize: 32.sp, // Responsive font size
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(width: 12),
-              SvgPicture.asset('assets/images/vocabulary/audio_icon.svg')
+              SizedBox(width: 12.w), // Responsive spacing
+              SvgPicture.asset(
+                'assets/images/vocabulary/audio_icon.svg',
+                width: 24.w, // Responsive SVG width
+                height: 24.h, // Responsive SVG height
+              ),
             ],
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h), // Responsive spacing
         ] else ...[
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive spacing
         ],
 
         // Options
@@ -104,12 +114,12 @@ class QuizView extends GetView<QuizController> {
             switch (controller.currentQuestionType) {
               case 'matching':
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w), // Responsive padding
                   child: _buildMatchingOptions(),
                 );
               default:
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w), // Responsive padding
                   child: _buildMultipleChoiceOptions(),
                 );
             }
@@ -138,7 +148,7 @@ class QuizView extends GetView<QuizController> {
             },
           ),
         ),
-        const SizedBox(width: 20),
+        SizedBox(width: 20.w), // Responsive spacing
         Expanded(
           child: ListView.builder(
             itemCount: arabicWords.length,
@@ -199,27 +209,27 @@ class QuizView extends GetView<QuizController> {
 
       return InkWell(
         onTap: isChecked ? null : () => controller.selectMatchingItem(item),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r), // Responsive border radius
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          padding: const EdgeInsets.all(12),
+          margin: EdgeInsets.symmetric(vertical: 8.h), // Responsive margin
+          padding: EdgeInsets.all(12.w), // Responsive padding
           decoration: BoxDecoration(
             color: backgroundColor,
-            border: Border.all(color: borderColor, width: 2),
-            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: borderColor, width: 2.w), // Responsive border width
+            borderRadius: BorderRadius.circular(12.r), // Responsive border radius
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 2),
+                spreadRadius: 1.w, // Responsive spread radius
+                blurRadius: 5.w, // Responsive blur radius
+                offset: Offset(0, 2.h), // Responsive offset
               ),
             ],
           ),
           child: Text(
             item,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp, // Responsive font size
               fontWeight: FontWeight.w500,
               color: textColor,
             ),
@@ -231,11 +241,13 @@ class QuizView extends GetView<QuizController> {
   }
 
   Widget _buildMultipleChoiceOptions() {
-    return Column(
-      children: [
-        ...controller.currentOptions
-            .map((option) => _buildOptionButton(option)),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ...controller.currentOptions
+              .map((option) => _buildOptionButton(option)),
+        ],
+      ),
     );
   }
 
@@ -264,22 +276,22 @@ class QuizView extends GetView<QuizController> {
 
       return Container(
         width: double.infinity,
-        margin: const EdgeInsets.only(bottom: 12),
+        margin: EdgeInsets.only(bottom: 12.h), // Responsive margin
         child: InkWell(
           onTap: () => controller.selectAnswer(option),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r), // Responsive border radius
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w), // Responsive padding
             decoration: BoxDecoration(
               color: backgroundColor,
-              border: Border.all(color: borderColor, width: 2),
-              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: borderColor, width: 2.w), // Responsive border width
+              borderRadius: BorderRadius.circular(12.r), // Responsive border radius
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
+                  spreadRadius: 1.w, // Responsive spread radius
+                  blurRadius: 5.w, // Responsive blur radius
+                  offset: Offset(0, 2.h), // Responsive offset
                 ),
               ],
             ),
@@ -289,7 +301,7 @@ class QuizView extends GetView<QuizController> {
                   child: Text(
                     option,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp, // Responsive font size
                       fontWeight: FontWeight.w500,
                       color: textColor,
                     ),
@@ -297,11 +309,11 @@ class QuizView extends GetView<QuizController> {
                 ),
                 if (controller.isAnswerSubmitted.value &&
                     option == controller.correctAnswer)
-                  Icon(Icons.check, color: Colors.green[800], size: 20),
+                  Icon(Icons.check, color: Colors.green[800], size: 20.sp), // Responsive icon size
                 if (controller.isAnswerSubmitted.value &&
                     option == controller.selectedAnswer.value &&
                     !controller.isCorrect.value)
-                  Icon(Icons.close, color: Colors.red[800], size: 20),
+                  Icon(Icons.close, color: Colors.red[800], size: 20.sp), // Responsive icon size
               ],
             ),
           ),
@@ -312,88 +324,95 @@ class QuizView extends GetView<QuizController> {
 
   Widget _buildBottomButtons() {
     if (!controller.isAnswerSubmitted.value) {
-      bool canCheck = controller.currentQuestionType == 'matching' && controller.selectedItems.length == 2;
+      bool canCheck =
+          controller.currentQuestionType == 'matching' && controller.selectedItems.length == 2;
 
       return SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 40),
+          padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 40.h), // Responsive padding
           child: Column(
             children: [
               CustomButton(
                 label: 'Check',
-                onPressed: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                onPressed: (controller.currentQuestionType == 'matching' &&
+                    controller.checkedPairs.length < controller.getCurrentPairs().length)
                     ? (canCheck ? controller.checkPair : () {})
                     : (controller.selectedAnswer.value.isNotEmpty ? controller.submitAnswer : () {}),
-                color: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                color: (controller.currentQuestionType == 'matching' &&
+                    controller.checkedPairs.length < controller.getCurrentPairs().length)
                     ? (canCheck ? AppColors.clrGreen2 : AppColors.btnClr5)
                     : (controller.selectedAnswer.value.isNotEmpty ? AppColors.clrGreen2 : AppColors.btnClr5),
-                txtClr: (controller.currentQuestionType == 'matching' && controller.checkedPairs.length < controller.getCurrentPairs().length)
+                txtClr: (controller.currentQuestionType == 'matching' &&
+                    controller.checkedPairs.length < controller.getCurrentPairs().length)
                     ? (canCheck ? Colors.white : AppColors.btnTxt2)
                     : (controller.selectedAnswer.value.isNotEmpty ? Colors.white : AppColors.btnTxt5),
+                width: double.infinity, // Full-width button
+                height: 50.h, // Responsive height
               ),
             ],
           ),
         ),
       );
     } else {
-      return Container
-        (color: controller.isCorrect.value
-          ? AppColors.clrGreen3 // Green for correct
-          : AppColors.clrRed2,
+      return Container(
+        color: controller.isCorrect.value ? AppColors.clrGreen3 : AppColors.clrRed2,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20 , left : 20 , right : 20 , bottom : 40),
+          padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w, bottom: 40.h), // Responsive padding
           child: Column(
             children: [
               // Feedback container with improved styling
               Row(
                 children: [
                   Container(
-                    width: 26,
-                    height: 26,
+                    width: 26.w, // Responsive width
+                    height: 26.h, // Responsive height
                     decoration: BoxDecoration(
-                      color: controller.isCorrect.value
-                          ? const Color(0xFF4CAF50)
-                          : const Color(0xFFF44336),
+                      color: controller.isCorrect.value ? const Color(0xFF4CAF50) : const Color(0xFFF44336),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       controller.isCorrect.value ? Icons.check : Icons.close,
                       color: Colors.white,
-                      size: 18,
+                      size: 18.sp, // Responsive icon size
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12.w), // Responsive spacing
                   Expanded(
                     child: Text(
                       controller.isCorrect.value ? 'Fantastic!' : 'Oops, that\'s incorrect',
                       style: h1.copyWith(
-                        fontSize: 22,
+                        fontSize: 22.sp, // Responsive font size
                         fontWeight: FontWeight.w800,
-                        color: controller.isCorrect.value
-                            ? AppColors.clrGreen4 // Dark green text
-                            : AppColors.clrRed4 , // Dark red text
+                        color: controller.isCorrect.value ? AppColors.clrGreen4 : AppColors.clrRed4,
                       ),
                     ),
                   ),
-                  SvgPicture.asset('assets/images/home/share_icon.svg',color: controller.isCorrect.value
-                      ? AppColors.clrGreen4 // Dark green text
-                      : AppColors.clrRed4 ,),
-                  const SizedBox(width: 12),
-                  SvgPicture.asset('assets/images/home/flag_icon.svg',color: controller.isCorrect.value
-                      ? AppColors.clrGreen4 // Dark green text
-                      : AppColors.clrRed4,),
+                  SvgPicture.asset(
+                    'assets/images/home/share_icon.svg',
+                    color: controller.isCorrect.value ? AppColors.clrGreen4 : AppColors.clrRed4,
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
+                  ),
+                  SizedBox(width: 12.w), // Responsive spacing
+                  SvgPicture.asset(
+                    'assets/images/home/flag_icon.svg',
+                    color: controller.isCorrect.value ? AppColors.clrGreen4 : AppColors.clrRed4,
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
+                  ),
                 ],
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
 
               // Action button
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
                   label: controller.currentQuestionType == 'matching' &&
-                      controller.checkedPairs.length < controller.getCurrentPairs().length || !controller.isCorrect.value
+                      controller.checkedPairs.length < controller.getCurrentPairs().length ||
+                      !controller.isCorrect.value
                       ? 'GOT IT'
                       : 'NEXT',
                   onPressed: () {
@@ -405,10 +424,10 @@ class QuizView extends GetView<QuizController> {
                       controller.nextQuestion();
                     }
                   },
-                  color: controller.isCorrect.value
-                      ? AppColors.clrGreen2 // Green for correct
-                      : AppColors.clrRed, // Red for incorrect
+                  color: controller.isCorrect.value ? AppColors.clrGreen2 : AppColors.clrRed,
                   txtClr: Colors.white,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
             ],
@@ -423,7 +442,7 @@ class QuizView extends GetView<QuizController> {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w), // Responsive padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -431,54 +450,64 @@ class QuizView extends GetView<QuizController> {
               children: [
                 // Left icon
                 GestureDetector(
-                  onTap: ()=> Get.back(),
+                  onTap: () => Get.back(),
                   child: SvgPicture.asset(
-                      'assets/images/lessons/close-circle_icon.svg'),
+                    'assets/images/lessons/close-circle_icon.svg',
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
+                  ),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: 20.w), // Responsive spacing
                 // Progress Bar
                 Expanded(
                   child: LinearProgressIndicator(
                     value: controller.progress,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)), // Responsive border radius
                     backgroundColor: AppColors.btnClr2,
                     valueColor: const AlwaysStoppedAnimation<Color>(
                         AppColors.clrGreen2),
-                    minHeight: 12,
+                    minHeight: 12.h, // Responsive height
                   ),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: 20.w), // Responsive spacing
                 // Right icon
-                SvgPicture.asset('assets/images/home/settings_icon.svg')
+                SvgPicture.asset(
+                  'assets/images/home/settings_icon.svg',
+                  width: 24.w, // Responsive SVG width
+                  height: 24.h, // Responsive SVG height
+                ),
               ],
             ),
 
             // Sad emoji
-            const Text('😢', style: TextStyle(fontSize: 48)),
+            Text(
+              '😢',
+              style: TextStyle(fontSize: 48.sp), // Responsive font size
+            ),
 
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h), // Responsive spacing
 
             // Encouraging message
             Text(
               "You'll do better next time!",
               style: h2.copyWith(
-                fontSize: 18,
-                color: AppColors.clrGreen5
+                fontSize: 18.sp, // Responsive font size
+                color: AppColors.clrGreen5,
               ),
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h), // Responsive spacing
 
             // Progress
             Text(
               "${controller.correctAnswersCount}/${controller.totalQuestions}",
               style: h2.copyWith(
-                fontSize: 16,
-                color: AppColors.clrGreen5
+                fontSize: 16.sp, // Responsive font size
+                color: AppColors.clrGreen5,
               ),
             ),
 
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h), // Responsive spacing
 
             // Terms Studied
             Align(
@@ -486,11 +515,11 @@ class QuizView extends GetView<QuizController> {
               child: Text(
                 "Terms Studied",
                 style: h2.copyWith(
-                  fontSize: 18,
+                  fontSize: 18.sp, // Responsive font size
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h), // Responsive spacing
 
             // Answer Result Cards
             ...results.map((result) {
@@ -500,11 +529,11 @@ class QuizView extends GetView<QuizController> {
               final wrong = result['wrong'] as int;
 
               return Container(
-                margin: const EdgeInsets.symmetric(vertical: 6),
-                padding: const EdgeInsets.all(12),
+                margin: EdgeInsets.symmetric(vertical: 6.h), // Responsive margin
+                padding: EdgeInsets.all(12.w), // Responsive padding
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey[300]!, width: 1.w), // Responsive border width
+                  borderRadius: BorderRadius.circular(12.r), // Responsive border radius
                   color: Colors.white,
                 ),
                 child: Row(
@@ -517,26 +546,28 @@ class QuizView extends GetView<QuizController> {
                           children: [
                             Text(
                               term,
-                              style: h4.copyWith(fontSize: 18),
+                              style: h4.copyWith(fontSize: 18.sp), // Responsive font size
                             ),
-                            const SizedBox(width: 8),
-                            SvgPicture.asset('assets/images/vocabulary/audio_icon.svg'),
+                            SizedBox(width: 8.w), // Responsive spacing
+                            SvgPicture.asset(
+                              'assets/images/vocabulary/audio_icon.svg',
+                              width: 24.w, // Responsive SVG width
+                              height: 24.h, // Responsive SVG height
+                            ),
                           ],
                         ),
                         Text(
                           translation,
-                          style: h4.copyWith(fontSize: 18, color: Colors.black87),
+                          style: h4.copyWith(fontSize: 18.sp, color: Colors.black87), // Responsive font size
                         ),
                       ],
                     ),
-
-                    // Translation
 
                     // Correct and wrong badges
                     Row(
                       children: [
                         _buildResultBadge(correct, AppColors.clrGreen5),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4.w), // Responsive spacing
                         _buildResultBadge(wrong, AppColors.clrRed4),
                       ],
                     ),
@@ -545,10 +576,17 @@ class QuizView extends GetView<QuizController> {
               );
             }).toList(),
 
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h), // Responsive spacing
 
             // Close Button
-            CustomButton(label: 'Close', onPressed: () => Get.back(), color: AppColors.btnClr1, txtClr: AppColors.btnTxt1)
+            CustomButton(
+              label: 'Close',
+              onPressed: () => Get.back(),
+              color: AppColors.btnClr1,
+              txtClr: AppColors.btnTxt1,
+              width: double.infinity, // Full-width button
+              height: 50.h, // Responsive height
+            ),
           ],
         ),
       ),
@@ -557,22 +595,21 @@ class QuizView extends GetView<QuizController> {
 
   Widget _buildResultBadge(int count, Color color) {
     return Container(
-      width: 24,
-      height: 24,
+      width: 24.w, // Responsive width
+      height: 24.h, // Responsive height
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r), // Responsive border radius
       ),
       child: Text(
         count.toString(),
         style: TextStyle(
-          fontSize: 14,
+          fontSize: 14.sp, // Responsive font size
           color: color,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
-
 }

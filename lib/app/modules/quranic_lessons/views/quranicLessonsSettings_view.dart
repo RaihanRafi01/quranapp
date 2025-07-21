@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';  // Import ScreenUtil
 import '../../../../common/appColors.dart';
 import '../../../../common/customFont.dart';
 
@@ -77,15 +78,15 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
             // Settings Content
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20.w), // Use ScreenUtil for padding
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h), // ScreenUtil for height spacing
 
                     // View Section
                     _buildSectionTitle('View'),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h), // ScreenUtil for height spacing
                     _buildCheckboxItem('Arabic', showArabic, (value) {
                       setState(() => showArabic = value!);
                     }),
@@ -99,26 +100,26 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
                       setState(() => showTajweed = value!);
                     }),
 
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h), // ScreenUtil for height spacing
 
                     // Font Section
                     _buildSectionTitle('Font'),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h), // ScreenUtil for height spacing
                     Text(
                       'Arabic Font',
                       style: h4.copyWith(
-                        fontSize: 16,
+                        fontSize: 16.sp, // Use ScreenUtil for font size
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h), // ScreenUtil for height spacing
                     Text(
                       'KFGQPC Hafs, Uthmani/Madani',
                       style: h4.copyWith(
-                        fontSize: 16,
+                        fontSize: 16.sp, // Use ScreenUtil for font size
                         color: AppColors.textColor3,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h), // ScreenUtil for height spacing
                     _buildFontSizeSlider('Arabic Font Size', arabicFontSize, (value) {
                       setState(() => arabicFontSize = value);
                     }),
@@ -126,7 +127,7 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
                       setState(() => translationFontSize = value);
                     }),
 
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h), // ScreenUtil for height spacing
 
                     // Translations Section
                     _buildSubSection('Translations', '1 Selected'),
@@ -134,7 +135,7 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
                     _buildSubSection('Mushaf Type', 'Classic Madani Mushaf'),
                     _buildSubSection('Tajweed Rules', 'Stops Signs, Tajweed Pronunciation Rules'),
 
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h), // ScreenUtil for height spacing
                   ],
                 ),
               ),
@@ -149,34 +150,34 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: h4.copyWith(fontSize: 14)),
-        SizedBox(height: 5),
-        Text(subTitle, style: h4.copyWith(fontSize: 14, color: AppColors.textColor3)),
-        SizedBox(height: 25),
+        Text(title, style: h4.copyWith(fontSize: 14.sp)), // Use ScreenUtil for font size
+        SizedBox(height: 5.h), // ScreenUtil for height spacing
+        Text(subTitle, style: h4.copyWith(fontSize: 14.sp, color: AppColors.textColor3)), // Use ScreenUtil for font size
+        SizedBox(height: 25.h), // ScreenUtil for height spacing
       ],
     );
   }
 
   Widget _buildAppBar() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h), // Use ScreenUtil for padding
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios, size: 18, color: Colors.black87),
+            icon: Icon(Icons.arrow_back_ios, size: 18.sp, color: Colors.black87), // Use ScreenUtil for icon size
             onPressed: () => Get.back(),
           ),
-          const Spacer(),
+          Spacer(),
           Text(
             'Settings',
             style: h2.copyWith(
-              fontSize: 18,
+              fontSize: 18.sp, // Use ScreenUtil for font size
               color: Colors.black87,
               fontWeight: FontWeight.w600,
             ),
           ),
-          const Spacer(),
-          const SizedBox(width: 40), // Balance for back button
+          Spacer(),
+          SizedBox(width: 40.w), // ScreenUtil for width spacing
         ],
       ),
     );
@@ -186,7 +187,7 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
     return Text(
       title,
       style: h2.copyWith(
-        fontSize: 20,
+        fontSize: 20.sp, // Use ScreenUtil for font size
         color: AppColors.textColor2,
       ),
     );
@@ -194,7 +195,7 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
 
   Widget _buildCheckboxItem(String title, bool value, Function(bool?) onChanged) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 12.h), // Use ScreenUtil for margin
       child: Row(
         children: [
           Checkbox(
@@ -204,14 +205,14 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
             checkColor: Colors.white,
             side: BorderSide(
               color: value ? AppColors.textBlue : Colors.grey[400]!,
-              width: 2,
+              width: 2.w, // Use ScreenUtil for border width
             ),
           ),
           Text(
             title,
             style: h3.copyWith(
-              fontSize: 14,
-              color: Colors.black
+                fontSize: 14.sp, // Use ScreenUtil for font size
+                color: Colors.black
             ),
           ),
         ],
@@ -221,7 +222,7 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
 
   Widget _buildFontSizeSlider(String title, double value, Function(double) onChanged) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: 16.h), // Use ScreenUtil for margin
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,28 +232,28 @@ class _QuranicLessonsSettingsViewState extends State<QuranicLessonsSettingsView>
               Text(
                 title,
                 style: h4.copyWith(
-                  fontSize: 14,
+                  fontSize: 14.sp, // Use ScreenUtil for font size
                 ),
               ),
               Text(
                 '${value.toInt()}',
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: 14.sp, // Use ScreenUtil for font size
                   color: AppColors.textBlue2,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h), // ScreenUtil for height spacing
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: AppColors.textBlue,
               inactiveTrackColor: Colors.grey[300],
               thumbColor: Colors.white,
               overlayColor: AppColors.textBlue.withOpacity(0.2),
-              trackHeight: 4,
-              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+              trackHeight: 4.h, // Use ScreenUtil for track height
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 14.r), // Use ScreenUtil for thumb radius
             ),
             child: Slider(
               value: value,

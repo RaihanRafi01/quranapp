@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
 import '../../../../common/appColors.dart';
 import '../controllers/vocabulary_controller.dart';
@@ -43,18 +44,18 @@ class VocabularyView extends GetView<VocabularyController> {
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: const Text(
+        title: Text(
           'Vocabulary',
           style: TextStyle(
             color: Colors.black87,
-            fontSize: 18,
+            fontSize: 18.sp, // Use ScreenUtil for font size
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w), // Use ScreenUtil for padding
             child: GestureDetector(
               onTap: () => Get.to(() => const VocabularySettingsView()),
               child: SvgPicture.asset('assets/images/home/settings_icon.svg'),
@@ -69,13 +70,13 @@ class VocabularyView extends GetView<VocabularyController> {
             children: [
               // Custom Toggle Buttons
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.symmetric(horizontal: 20.w), // Use ScreenUtil for margin
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r), // Use ScreenUtil for border radius
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(4),
+                  padding: EdgeInsets.all(4.w), // Use ScreenUtil for padding
                   child: Row(
                     children: [
                       _buildToggleButton(
@@ -119,8 +120,8 @@ class VocabularyView extends GetView<VocabularyController> {
           ),
           // Fixed button at the bottom right
           Positioned(
-            bottom: 90,
-            right: 16,
+            bottom: 90.h, // Use ScreenUtil for height
+            right: 16.w, // Use ScreenUtil for width
             child: SafeArea(
               child: Container(
                 constraints: BoxConstraints(
@@ -135,7 +136,7 @@ class VocabularyView extends GetView<VocabularyController> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(25.r), // Use ScreenUtil for border radius
                     ),
                     child: ElevatedButton(
                       onPressed: () {
@@ -144,17 +145,17 @@ class VocabularyView extends GetView<VocabularyController> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: EdgeInsets.symmetric(vertical: 16.h), // Use ScreenUtil for padding
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(25.r), // Use ScreenUtil for border radius
                         ),
                         elevation: 0,
                         shadowColor: Colors.transparent,
                       ),
-                      child: const Text(
+                      child: Text(
                         'Start Quiz',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 16.sp, // Use ScreenUtil for font size
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -181,10 +182,10 @@ class VocabularyView extends GetView<VocabularyController> {
           controller.setSelectedTab(index);
         },
         child: Obx(() => Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10.h), // Use ScreenUtil for vertical padding
           decoration: BoxDecoration(
             color: controller.selectedTab.value == index ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r), // Use ScreenUtil for border radius
             boxShadow: controller.selectedTab.value == index
                 ? [
               BoxShadow(
@@ -199,7 +200,7 @@ class VocabularyView extends GetView<VocabularyController> {
             child: Text(
               label,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp, // Use ScreenUtil for font size
                 fontWeight: controller.selectedTab.value == index ? FontWeight.w600 : FontWeight.normal,
                 color: controller.selectedTab.value == index ? Colors.black : Colors.grey[600],
               ),
@@ -214,9 +215,12 @@ class VocabularyView extends GetView<VocabularyController> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return ListView.separated(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w), // Use ScreenUtil for padding
           itemCount: words.length,
-          separatorBuilder: (context, index) => const Divider(height: 0.5, color: AppColors.btnClr3),
+          separatorBuilder: (context, index) => Divider(
+            height: 0.5.h, // Use ScreenUtil for height
+            color: AppColors.btnClr3,
+          ),
           itemBuilder: (context, index) {
             return _buildVocabularyItem(
               arabic: words[index]['arabic'],
@@ -237,7 +241,7 @@ class VocabularyView extends GetView<VocabularyController> {
     required String svgIcon,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: 12.h), // Use ScreenUtil for vertical padding
       child: Row(
         children: [
           PopupMenuButton<String>(
@@ -259,7 +263,7 @@ class VocabularyView extends GetView<VocabularyController> {
                 child: Row(
                   children: [
                     SvgPicture.asset('assets/images/vocabulary/tic_icon.svg'),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w), // Use ScreenUtil for spacing
                     const Text('Mark as learned'),
                   ],
                 ),
@@ -269,7 +273,7 @@ class VocabularyView extends GetView<VocabularyController> {
                 child: Row(
                   children: [
                     SvgPicture.asset('assets/images/vocabulary/ignore_icon.svg'),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w), // Use ScreenUtil for spacing
                     const Text('Ignore word'),
                   ],
                 ),
@@ -279,7 +283,7 @@ class VocabularyView extends GetView<VocabularyController> {
                 child: Row(
                   children: [
                     SvgPicture.asset('assets/images/vocabulary/review_icon.svg'),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w), // Use ScreenUtil for spacing
                     const Text('Review word'),
                   ],
                 ),
@@ -289,7 +293,7 @@ class VocabularyView extends GetView<VocabularyController> {
               svgIcon,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w), // Use ScreenUtil for spacing
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,23 +302,23 @@ class VocabularyView extends GetView<VocabularyController> {
                   children: [
                     Text(
                       arabic,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: 18.sp, // Use ScreenUtil for font size
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w), // Use ScreenUtil for spacing
                     SvgPicture.asset('assets/images/vocabulary/audio_icon.svg'),
                   ],
                 ),
                 if (english.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: 4),
+                    padding: EdgeInsets.only(top: 4.h), // Use ScreenUtil for vertical spacing
                     child: Text(
                       english,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.sp, // Use ScreenUtil for font size
                         color: Colors.grey[600],
                       ),
                     ),

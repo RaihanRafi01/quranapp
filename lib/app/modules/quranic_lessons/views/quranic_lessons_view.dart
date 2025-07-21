@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
@@ -8,7 +9,6 @@ import '../../../../common/appColors.dart';
 import '../../../../common/customFont.dart';
 import '../controllers/quranic_lessons_controller.dart';
 
-// Main Quranic Lessons View
 class QuranicLessonsView extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -25,7 +25,7 @@ class QuranicLessonsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _buildLessonsList(controller)
+      body: _buildLessonsList(controller),
     );
   }
 
@@ -35,19 +35,28 @@ class QuranicLessonsView extends StatelessWidget {
         children: [
           // Custom App Bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h), // Responsive padding
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios, size: 24, color: AppColors.textBlue2),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 24.sp, // Responsive icon size
+                    color: AppColors.textBlue2,
+                  ),
                   onPressed: () => Get.back(),
                 ),
                 const Spacer(),
                 GestureDetector(
-                  onTap: (){
-                    Get.to(QuranicLessonsSettingsView());
+                  onTap: () {
+                    Get.to(() => const QuranicLessonsSettingsView());
                   },
-                    child: SvgPicture.asset('assets/images/home/settings_icon.svg'))
+                  child: SvgPicture.asset(
+                    'assets/images/home/settings_icon.svg',
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
+                  ),
+                ),
               ],
             ),
           ),
@@ -55,7 +64,7 @@ class QuranicLessonsView extends StatelessWidget {
           // Lesson Items
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w), // Responsive padding
               child: Stack(
                 children: [
                   Column(
@@ -68,7 +77,7 @@ class QuranicLessonsView extends StatelessWidget {
                         duration: "1:50",
                         isFirst: true,
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h), // Responsive spacing
                       _buildLessonItem(
                         controller,
                         ayahNumber: "2",
@@ -77,7 +86,7 @@ class QuranicLessonsView extends StatelessWidget {
                         duration: "2:15",
                         isFirst: false,
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h), // Responsive spacing
                       _buildLessonItem(
                         controller,
                         ayahNumber: "3",
@@ -86,7 +95,7 @@ class QuranicLessonsView extends StatelessWidget {
                         duration: "2:15",
                         isFirst: false,
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h), // Responsive spacing
                       _buildLessonItem(
                         controller,
                         ayahNumber: "4",
@@ -98,39 +107,47 @@ class QuranicLessonsView extends StatelessWidget {
                     ],
                   ),
                   Positioned(
-                    top: 100,
-                    left: 80,
-                    right: 80,
+                    top: 100.h, // Responsive positioning
+                    left: 80.w, // Responsive positioning
+                    right: 80.w, // Responsive positioning
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r), // Responsive border radius
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // Info Icon and Duration
                           Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: EdgeInsets.all(20.w), // Responsive padding
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SvgPicture.asset('assets/images/vocabulary/info_icon.svg'),
+                                SvgPicture.asset(
+                                  'assets/images/vocabulary/info_icon.svg',
+                                  width: 24.w, // Responsive SVG width
+                                  height: 24.h, // Responsive SVG height
+                                ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h), // Responsive padding
                                   decoration: BoxDecoration(
                                     color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(10.r), // Responsive border radius
                                   ),
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset('assets/images/vocabulary/lock_icon.svg'),
-                                      SizedBox(width: 4),
+                                      SvgPicture.asset(
+                                        'assets/images/vocabulary/lock_icon.svg',
+                                        width: 16.w, // Responsive SVG width
+                                        height: 16.h, // Responsive SVG height
+                                      ),
+                                      SizedBox(width: 4.w), // Responsive spacing
                                       Text(
                                         "1/50",
                                         style: h4.copyWith(
                                           color: Colors.white,
-                                          fontSize: 18,
+                                          fontSize: 18.sp, // Responsive font size
                                         ),
                                       ),
                                     ],
@@ -139,69 +156,52 @@ class QuranicLessonsView extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 50),
-                          SvgPicture.asset('assets/images/vocabulary/audio_icon.svg',color: AppColors.textBlue2,),
-                          SizedBox(height: 16),
+                          SizedBox(height: 50.h), // Responsive spacing
+                          SvgPicture.asset(
+                            'assets/images/vocabulary/audio_icon.svg',
+                            color: AppColors.textBlue2,
+                            width: 24.w, // Responsive SVG width
+                            height: 24.h, // Responsive SVG height
+                          ),
+                          SizedBox(height: 16.h), // Responsive spacing
                           Text(
                             "سُبْحَانَ اللَّهِ",
                             style: h4.copyWith(
-                              fontSize: 24,
+                              fontSize: 24.sp, // Responsive font size
                               color: AppColors.textBlue2,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h), // Responsive spacing
                           // Main Translation
                           Text(
                             "Glory be to Allah",
                             style: h2.copyWith(
-                              fontSize: 18,
+                              fontSize: 18.sp, // Responsive font size
                               color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 50),
+                          SizedBox(height: 50.h), // Responsive spacing
                           Container(
-                            height: 50,
+                            height: 50.h, // Responsive height
                             width: double.maxFinite,
                             decoration: BoxDecoration(
                               color: AppColors.textBlue2,
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(10), // Rounded bottom-left corner
-                                bottomRight: Radius.circular(10), // Rounded bottom-right corner
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10.r), // Responsive border radius
+                                bottomRight: Radius.circular(10.r), // Responsive border radius
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Add to Quiz List',
                                 style: h4.copyWith(
-                                  fontSize: 18,
-                                  color: Colors.white, // Adjust text color for visibility on cyan
+                                  fontSize: 18.sp, // Responsive font size
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
-                          // Add to Quiz List Button
-                          /*SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () => controller.showPlayer(),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.textBlue2,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
-                                ),
-                                elevation: 0,
-                              ),
-                              child: const Text(
-                                "Add to Quiz List",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
@@ -212,10 +212,9 @@ class QuranicLessonsView extends StatelessWidget {
           ),
 
           // Bottom Navigation Buttons
-          // Bottom Navigation Buttons
           Obx(() {
             return Container(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.w), // Responsive padding
               child: controller.isPlayerRowVisible.value
                   ? _buildPlayerRow(controller) // New row when play icon is clicked
                   : _buildNavigationRow(controller), // Original navigation row
@@ -234,17 +233,29 @@ class QuranicLessonsView extends StatelessWidget {
           onTap: () {
             controller.togglePlayerRow(); // Toggle to player row on play icon click
           },
-          child: SvgPicture.asset('assets/images/lessons/play_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/play_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset('assets/images/lessons/word_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/word_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {
-            Get.to(VocabularyView());
+            Get.to(() => const VocabularyView());
           },
-          child: SvgPicture.asset('assets/images/lessons/voca_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/voca_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
       ],
     );
@@ -254,32 +265,55 @@ class QuranicLessonsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // Example widgets for the new row
         GestureDetector(
           onTap: () {
             Get.find<QuranicLessonsController>().togglePlayerRow(); // Toggle back to navigation row
           },
-          child: SvgPicture.asset('assets/images/lessons/play_black_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/play_black_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset('assets/images/lessons/previous_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/previous_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset('assets/images/lessons/play_white_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/play_white_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset('assets/images/lessons/next_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/next_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset('assets/images/lessons/speed_icon.svg'),
+          child: SvgPicture.asset(
+            'assets/images/lessons/speed_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
         GestureDetector(
-          onTap: ()=> controller.navigateToSettings(),
-          child: SvgPicture.asset('assets/images/lessons/settings_icon.svg'),
+          onTap: () => controller.navigateToSettings(),
+          child: SvgPicture.asset(
+            'assets/images/lessons/settings_icon.svg',
+            width: 24.w, // Responsive SVG width
+            height: 24.h, // Responsive SVG height
+          ),
         ),
       ],
     );
@@ -304,14 +338,14 @@ class QuranicLessonsView extends StatelessWidget {
               Text(
                 ayahNumber,
                 style: h4.copyWith(
-                  fontSize: 18,
+                  fontSize: 18.sp, // Responsive font size
                   color: AppColors.textColor5,
                 ),
               ),
               const Spacer(),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h), // Responsive spacing
           // Arabic Words with English Translation
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -322,19 +356,19 @@ class QuranicLessonsView extends StatelessWidget {
                   children: [
                     Text(
                       arabicWords[index],
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: TextStyle(
+                        fontSize: 20.sp, // Responsive font size
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                         height: 1.3,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h), // Responsive spacing
                     Text(
                       englishWords[index],
                       style: h4.copyWith(
-                        fontSize: 12,
+                        fontSize: 12.sp, // Responsive font size
                         color: AppColors.textColor5,
                         height: 1.2,
                       ),
@@ -342,22 +376,26 @@ class QuranicLessonsView extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (index < arabicWords.length - 1) const SizedBox(width: 20), // Fixed width gap between Columns
+                if (index < arabicWords.length - 1) SizedBox(width: 20.w), // Responsive spacing
               ],
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h), // Responsive spacing
           // Description Text
           Text(
             "In the name of Allah, the Most Gracious, the Most Merciful",
             style: h4.copyWith(
-              fontSize: 14,
+              fontSize: 14.sp, // Responsive font size
               color: AppColors.textColor6,
               height: 1.4,
             ),
           ),
-          const SizedBox(height: 20),
-          const Divider(height: 0.5, color: AppColors.borderClr2),
+          SizedBox(height: 20.h), // Responsive spacing
+          Divider(
+            height: 0.5.h, // Responsive height
+            color: AppColors.borderClr2,
+            thickness: 0.5.w, // Responsive thickness
+          ),
         ],
       ),
     );

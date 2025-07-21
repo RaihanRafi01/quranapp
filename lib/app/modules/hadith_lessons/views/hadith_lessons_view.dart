@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/video_lessons/views/videoPlayer_view.dart';
 import 'package:quranapp/app/modules/vocabulary/views/vocabulary_view.dart';
 import 'package:quranapp/common/customFont.dart';
-
 import '../../../../common/appColors.dart';
 
 class HadithLessonsView extends StatelessWidget {
@@ -12,11 +12,12 @@ class HadithLessonsView extends StatelessWidget {
   final String subtitle;
   final bool isHadith;
 
-  const HadithLessonsView(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.isHadith});
+  const HadithLessonsView({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.isHadith,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +31,12 @@ class HadithLessonsView extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16.w), // Responsive padding
                       child: Row(
                         children: [
                           GestureDetector(
                             onTap: () => Navigator.pop(context),
-                            child: const Icon(Icons.close_rounded, size: 30),
+                            child: Icon(Icons.close_rounded, size: 30.sp), // Responsive icon size
                           ),
                           Expanded(
                             child: SliderTheme(
@@ -43,9 +44,10 @@ class HadithLessonsView extends StatelessWidget {
                                 activeTrackColor: Colors.green,
                                 inactiveTrackColor: Colors.grey[300],
                                 thumbColor: Colors.green,
-                                trackHeight: 2,
-                                thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 8),
+                                trackHeight: 2.h, // Responsive track height
+                                thumbShape: RoundSliderThumbShape(
+                                  enabledThumbRadius: 8.r, // Responsive thumb radius
+                                ),
                               ),
                               child: Slider(
                                 value: 20,
@@ -55,7 +57,7 @@ class HadithLessonsView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Icon(Icons.more_horiz_outlined, size: 30),
+                          Icon(Icons.more_horiz_outlined, size: 30.sp), // Responsive icon size
                         ],
                       ),
                     ),
@@ -65,15 +67,18 @@ class HadithLessonsView extends StatelessWidget {
                       title: 'Sahih Al Bukhari',
                       subtitle: 'Kapitel 2 Hadithnr. 8',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h), // Responsive spacing
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: const Text(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w), // Responsive padding
+                      child: Text(
                         '''
 طريق الجنة من يشاء ويضل من يشاء فمن هداه فبفضله ومن أضله فبعدله لا يسألوا عما يفعلوه فمسألون لكن وجدت أن ذلك ليس مناسبا للسياق فوجدت أن المقصود أن هذه البهائم لها أعين تبصر بها مواطئ أقدامها وتعرف بها الطرق وتدل بها المسافات لكن ما يخلق من هذه المراكب الأخرى كالسيارات والطائرات والمراكب الفضائية
 ''',
-                        style:
-                            TextStyle(fontSize: 23, letterSpacing: 3, height: 2),
+                        style: TextStyle(
+                          fontSize: 23.sp, // Responsive font size
+                          letterSpacing: 3.w, // Responsive letter spacing
+                          height: 2,
+                        ),
                       ),
                     ),
                   ],
@@ -82,23 +87,39 @@ class HadithLessonsView extends StatelessWidget {
             ),
             // Fixed bottom row
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.w), // Responsive padding
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   isHadith
                       ? SvgPicture.asset(
-                          'assets/images/lessons/play_rounded.svg')
+                    'assets/images/lessons/play_rounded.svg',
+                    width: 40.w, // Responsive width
+                    height: 40.h, // Responsive height
+                  )
                       : GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.to(VideoPlayerScreen(title: title, subtitle: subtitle));
                     },
-                          child: SvgPicture.asset(
-                              'assets/images/lessons/video_icon.svg')),
-                  SvgPicture.asset('assets/images/lessons/sentence_icon.svg'),
+                    child: SvgPicture.asset(
+                      'assets/images/lessons/video_icon.svg',
+                      width: 40.w, // Responsive width
+                      height: 40.h, // Responsive height
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/lessons/sentence_icon.svg',
+                    width: 40.w, // Responsive width
+                    height: 40.h, // Responsive height
+                  ),
                   GestureDetector(
-                    onTap: ()=> Get.to(VocabularyView(initialTabIndex: 1,)),
-                      child: SvgPicture.asset('assets/images/lessons/book_icon.svg')),
+                    onTap: () => Get.to(const VocabularyView(initialTabIndex: 1)),
+                    child: SvgPicture.asset(
+                      'assets/images/lessons/book_icon.svg',
+                      width: 40.w, // Responsive width
+                      height: 40.h, // Responsive height
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -127,7 +148,7 @@ class HadithHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 50),
+        SizedBox(width: 50.w), // Responsive spacing
         // Rounded image with overlay number
         Stack(
           alignment: Alignment.center,
@@ -135,19 +156,21 @@ class HadithHeader extends StatelessWidget {
             Image.asset(
               imageUrl,
               fit: BoxFit.cover,
+              width: 80.w, // Responsive width
+              height: 80.h, // Responsive height
             ),
             Container(
-              width: 30,
-              height: 30,
+              width: 30.w, // Responsive width
+              height: 30.h, // Responsive height
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30.r), // Responsive border radius
                 color: Colors.black.withOpacity(0.4),
               ),
               child: Center(
                 child: Text(
                   hadithNumber,
                   style: h1.copyWith(
-                    fontSize: 16,
+                    fontSize: 16.sp, // Responsive font size
                     color: Colors.white,
                   ),
                 ),
@@ -155,22 +178,20 @@ class HadithHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w), // Responsive spacing
         // Title and subtitle
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
-              style: h1.copyWith(
-                fontSize: 20,
-              ),
+              style: h1.copyWith(fontSize: 20.sp), // Responsive font size
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h), // Responsive spacing
             Text(
               subtitle,
               style: h3.copyWith(
-                fontSize: 14,
+                fontSize: 14.sp, // Responsive font size
                 color: Colors.black54,
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:quranapp/common/customFont.dart';
 import '../../../../common/appColors.dart';
 
@@ -91,17 +92,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         onTap: _toggleControls,
         child: Stack(
           children: [
-
             Positioned(
-              top: 90,
-                right: 20,
-                left: 20,
-                child: Image.asset('assets/images/lessons/video_placeholder.png')),
+              top: 90.h,
+              right: 20.w,
+              left: 20.w,
+              child: Image.asset('assets/images/lessons/video_placeholder.png'),
+            ),
             // Arabic text overlay
             Positioned(
-              left: 20,
-              right: 20,
-              bottom: 200,
+              left: 20.w,
+              right: 20.w,
+              bottom: 200.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -110,68 +111,68 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'وجعت أن المقصود أن من الطيور ما\nهو جائز مثل عن القصد دائما',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'لم يدع لنا نعمل وقتما نشاء',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.w500,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'وجعت أن المقصود أن من الطيور ما\nهو جائز مثل عن القصد دائما',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'وهي الخطوط الجوية',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'لا يمكن أن تكون مستقلة أبدا',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       height: 2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     'تحتاج إلى الخير من مستقبلينا',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       color: Colors.white60,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       height: 2,
                     ),
                   ),
@@ -182,25 +183,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             // Top controls (visible when _showControls is true)
             if (_showControls)
               Positioned(
-                top: 50,
-                left: 16,
-                right: 16,
+                top: 50.h,
+                left: 16.w,
+                right: 16.w,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: const Icon(
+                      child: Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: Colors.white,
-                        size: 40,
+                        size: 40.sp,
                       ),
                     ),
                     Text(
                       widget.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -208,10 +209,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       onTap: () {
                         // More options
                       },
-                      child: const Icon(
+                      child: Icon(
                         Icons.more_horiz,
                         color: Colors.white,
-                        size: 40,
+                        size: 40.sp,
                       ),
                     ),
                   ],
@@ -221,9 +222,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             // Bottom controls
             if (_showControls)
               Positioned(
-                bottom: 20,
-                left: 16,
-                right: 16,
+                bottom: 20.h,
+                left: 16.w,
+                right: 16.w,
                 child: Column(
                   children: [
                     // Progress bar
@@ -231,9 +232,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       children: [
                         Text(
                           _formatTime(_currentPosition),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                         Expanded(
@@ -242,9 +243,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               activeTrackColor: Colors.green,
                               inactiveTrackColor: Colors.white30,
                               thumbColor: Colors.green,
-                              trackHeight: 2,
-                              thumbShape: const RoundSliderThumbShape(
-                                enabledThumbRadius: 6,
+                              trackHeight: 2.h,
+                              thumbShape: RoundSliderThumbShape(
+                                enabledThumbRadius: 6.r,
                               ),
                             ),
                             child: Slider(
@@ -261,9 +262,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         ),
                         Text(
                           _formatTime(_totalDuration),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                       ],
@@ -276,54 +277,56 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           GestureDetector(
                             onTap: _seekBackward,
                             child: Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12.w),
                               decoration: BoxDecoration(
                                 color: Colors.black26,
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.replay_5_rounded,
                                 color: Colors.white,
-                                size: 40,
+                                size: 40.sp,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 40),
+                          SizedBox(width: 40.w),
                           GestureDetector(
                             onTap: _togglePlayPause,
                             child: Container(
-                              padding: const EdgeInsets.all(16),
+                              padding: EdgeInsets.all(16.w),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(40),
+                                borderRadius: BorderRadius.circular(40.r),
                               ),
                               child: Icon(
-                                _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                                _isPlaying
+                                    ? Icons.pause_rounded
+                                    : Icons.play_arrow_rounded,
                                 color: Colors.black,
-                                size: 32,
+                                size: 32.sp,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 40),
+                          SizedBox(width: 40.w),
                           GestureDetector(
                             onTap: _seekForward,
                             child: Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12.w),
                               decoration: BoxDecoration(
                                 color: Colors.black26,
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.forward_5_rounded,
                                 color: Colors.white,
-                                size: 40,
+                                size: 40.sp,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 18,),
+                    SizedBox(height: 18.h),
                     // Bottom action buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -331,16 +334,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         GestureDetector(
                           onTap: _changePlaybackSpeed,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.w, vertical: 8.h),
                             decoration: BoxDecoration(
                               color: Colors.black26,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16.r),
                             ),
                             child: Text(
                               '${_playbackSpeed}x',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -350,31 +354,34 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           onTap: () {
                             // repeat
                           },
-                          child: SvgPicture.asset('assets/images/lessons/repeate_icon.svg'),
+                          child: SvgPicture.asset(
+                              'assets/images/lessons/repeate_icon.svg'),
                         ),
                         GestureDetector(
                           onTap: () {
                             // Captions/subtitles
                           },
-                          child: SvgPicture.asset('assets/images/lessons/video_video_icon.svg'),
+                          child: SvgPicture.asset(
+                              'assets/images/lessons/video_video_icon.svg'),
                         ),
                         GestureDetector(
                           onTap: () {
                             // Bookmark
                           },
-                          child: SvgPicture.asset('assets/images/lessons/trans_icon.svg'),
+                          child: SvgPicture.asset(
+                              'assets/images/lessons/trans_icon.svg'),
                         ),
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.black26,
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(20.r),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.close_rounded,
                               color: Colors.white,
-                              size: 28,
+                              size: 28.sp,
                             ),
                           ),
                         ),

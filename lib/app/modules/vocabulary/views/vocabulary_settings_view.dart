@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:quranapp/app/modules/vocabulary/controllers/vocabulary_controller.dart';
 
 import '../../../../common/appColors.dart';
@@ -26,7 +27,7 @@ class VocabularySettingsView extends StatelessWidget {
           'Settings',
           style: h2.copyWith(
             color: Colors.black87,
-            fontSize: 20,
+            fontSize: 20.sp, // Use ScreenUtil for font size
           ),
         ),
         actions: [
@@ -38,22 +39,22 @@ class VocabularySettingsView extends StatelessWidget {
               'Done',
               style: h4.copyWith(
                 color: AppColors.textBlue,
-                fontSize: 18,
+                fontSize: 18.sp, // Use ScreenUtil for font size
               ),
             ),
           ),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w), // Use ScreenUtil for padding
         children: [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.w), // Use ScreenUtil for padding
             child: Text(
               'Activities',
               style: h2.copyWith(
                 color: AppColors.textColor3,
-                fontSize: 20
+                fontSize: 20.sp, // Use ScreenUtil for font size
               ),
             ),
           ),
@@ -74,7 +75,6 @@ class VocabularySettingsView extends StatelessWidget {
           )),
         ],
       ),
-
     );
   }
 
@@ -84,7 +84,12 @@ class VocabularySettingsView extends StatelessWidget {
     required ValueChanged<bool> onChanged,
   }) {
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18.sp, // Use ScreenUtil for font size
+        ),
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -96,7 +101,7 @@ class VocabularySettingsView extends StatelessWidget {
             inactiveTrackColor: AppColors.btnClr2,
             activeTrackColor: AppColors.textBlue,
           ),
-          SizedBox(width: 10,),
+          SizedBox(width: 10.w), // Use ScreenUtil for spacing
           const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black45),
         ],
       ),

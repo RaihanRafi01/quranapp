@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import '../../../../common/appColors.dart';
 import '../../../../common/customFont.dart';
 import '../../../../common/widgets/customButton.dart';
@@ -79,7 +80,7 @@ class SetupProfileView extends GetView<SetupProfileController> {
 
   Widget _buildLanguageScreen() {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.w), // Use ScreenUtil for padding
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -91,32 +92,32 @@ class SetupProfileView extends GetView<SetupProfileController> {
                   Get.back();
                 },
                 child: Text('< Back',
-                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
+                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16.sp)), // Use ScreenUtil for font size
               ),
               Text('1/8',
-                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
+                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20.sp)), // Use ScreenUtil for font size
             ],
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for height spacing
           Text(
             'Which language would you like to learn?',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 24.sp, // Use ScreenUtil for font size
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for height spacing
           _buildLanguageOption(
               'assets/images/flags/en_flag.png',
               'Spanish',
               '300 million native speakers worldwide'),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h), // Use ScreenUtil for height spacing
           _buildLanguageOption(
               'assets/images/flags/de_flag.png',
               'German',
               'Most spoken native language in Europe'),
-          const SizedBox(height: 80), // Space to prevent content cutoff
+          SizedBox(height: 80.h), // Space to prevent content cutoff
         ],
       ),
     );
@@ -128,23 +129,23 @@ class SetupProfileView extends GetView<SetupProfileController> {
     return GestureDetector(
       onTap: () => controller.selectLanguage(language),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w), // Use ScreenUtil for padding
         decoration: BoxDecoration(
           border: Border.all(
             color: AppColors.borderClr,
-            width: isSelected ? 2 : 1,
+            width: isSelected ? 2.w : 1.w, // Use ScreenUtil for width
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r), // Use ScreenUtil for border radius
           color: isSelected ? AppColors.btnClr3 : Colors.white,
         ),
         child: Row(
           children: [
             Image.asset(
               imagePath,
-              width: 39,
-              height: 39,
+              width: 39.w, // Use ScreenUtil for width
+              height: 39.h, // Use ScreenUtil for height
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w), // Use ScreenUtil for spacing
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,16 +153,16 @@ class SetupProfileView extends GetView<SetupProfileController> {
                   Text(
                     language,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp, // Use ScreenUtil for font size
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h), // Use ScreenUtil for spacing
                   Text(
                     description,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp, // Use ScreenUtil for font size
                       color: Colors.grey[600],
                     ),
                   ),
@@ -174,7 +175,6 @@ class SetupProfileView extends GetView<SetupProfileController> {
     );
   }
 
-
   Widget _buildGoalScreenTemplate({
     required String step,
     required String title,
@@ -182,7 +182,7 @@ class SetupProfileView extends GetView<SetupProfileController> {
     bool isStep2Layout = false,
   }) {
     return Obx(() => Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.w), // Use ScreenUtil for padding
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,47 +192,49 @@ class SetupProfileView extends GetView<SetupProfileController> {
               GestureDetector(
                 onTap: controller.previousStep,
                 child: Text('< Back',
-                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
+                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16.sp)), // Use ScreenUtil for font size
               ),
               Text(step,
-                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
+                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20.sp)), // Use ScreenUtil for font size
             ],
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for spacing
           Center(
             child: Text(
               textAlign: TextAlign.center,
               title,
               style: h3.copyWith(
-                fontSize: 20,
+                fontSize: 20.sp, // Use ScreenUtil for font size
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for spacing
           ...options.map((option) => Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: EdgeInsets.only(bottom: 16.h), // Use ScreenUtil for spacing
             child: isStep2Layout
                 ? _buildGoalOptionStep2(option, controller.currentStep.value)
                 : _buildGoalOption(option, controller.currentStep.value),
           )),
-          const SizedBox(height: 50),
+          SizedBox(height: 50.h), // Use ScreenUtil for spacing
           Center(
             child: Text(
               textAlign: TextAlign.center,
               controller.getStatsForStep(controller.currentStep.value),
               style: h3.copyWith(
-                fontSize: 16,
+                fontSize: 16.sp, // Use ScreenUtil for font size
                 color: AppColors.textColor,
               ),
             ),
           ),
-          const SizedBox(height: 80), // Space to prevent content cutoff
+          SizedBox(height: 80.h), // Space to prevent content cutoff
         ],
       ),
     ));
   }
+
+  // Example goal screen with adjusted padding and font sizes
   Widget _buildGoalScreen1() {
     return _buildGoalScreenTemplate(
       step: '2/8',
@@ -439,7 +441,7 @@ class SetupProfileView extends GetView<SetupProfileController> {
 
   Widget _buildAchievementScreen() {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.w), // Use ScreenUtil for padding
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -450,35 +452,35 @@ class SetupProfileView extends GetView<SetupProfileController> {
                 onTap: controller.previousStep,
                 child: Text(
                   '< Back',
-                  style: h3.copyWith(color: AppColors.textBlue, fontSize: 20),
+                  style: h3.copyWith(color: AppColors.textBlue, fontSize: 20.sp), // Use ScreenUtil for font size
                 ),
               ),
               Text(
                 '8/8',
-                style: h1.copyWith(color: AppColors.textColor, fontSize: 20),
+                style: h1.copyWith(color: AppColors.textColor, fontSize: 20.sp), // Use ScreenUtil for font size
               ),
             ],
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for spacing
           Text(
             'Achieve your goals',
             style: h1.copyWith(
-              fontSize: 26,
+              fontSize: 26.sp, // Use ScreenUtil for font size
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h), // Use ScreenUtil for spacing
           Text(
             'Get daily reminders to maintain your 60 min/day commitment to learning Quranic.',
             style: h3.copyWith(
-              fontSize: 16,
+              fontSize: 16.sp, // Use ScreenUtil for font size
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 70),
+          SizedBox(height: 70.h), // Use ScreenUtil for spacing
           SvgPicture.asset('assets/images/goal/goal_image.svg'),
-          const SizedBox(height: 80), // Space to prevent content cutoff
+          SizedBox(height: 80.h), // Space to prevent content cutoff
         ],
       ),
     );
@@ -492,7 +494,5 @@ class GoalOption {
   final String level;
   final bool isSelected;
 
-
-  GoalOption(this.icon, this.title, this.description, this.isSelected,
-      [this.level = '']);
+  GoalOption(this.icon, this.title, this.description, this.isSelected, [this.level = '']);
 }

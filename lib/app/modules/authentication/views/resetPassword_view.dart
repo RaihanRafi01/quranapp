@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/authentication/views/login_view.dart';
 import '../../../../common/appColors.dart';
@@ -16,45 +17,47 @@ class ResetPasswordView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 60),
+              SizedBox(height: 60.h), // Responsive spacing
               Text(
                 'Create a new password',
-                style: h1.copyWith(fontSize: 28, fontWeight: FontWeight.bold),
+                style: h1, // Uses h1 with fontSize: 24.sp
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h), // Responsive spacing
               CustomTextField(
                 hintText: 'New password',
                 isPassword: true,
                 onChanged: (value) => controller.password.value = value,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h), // Responsive spacing
               CustomTextField(
                 hintText: 'Confirm password',
                 isPassword: true,
                 onChanged: (value) => controller.username.value = value, // Adjust if needed
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               Obx(() => CustomButton(
                 label: 'Continue',
                 onPressed: controller.password.value.length >= 6
                     ? () {
                   // TODO: Implement reset password logic
                   Get.snackbar("Success", "Password reset successfully!");
-                  Get.offAll(LoginView());
+                  Get.offAll(() => const LoginView());
                 }
                     : () {},
                 color: controller.password.value.length >= 6
                     ? AppColors.btnClr1
                     : AppColors.btnClr2,
                 txtClr: AppColors.btnTxt1,
+                width: double.infinity, // Full-width button
+                height: 50.h, // Responsive height
               )),
-              SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               _buildTermsText(),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h), // Responsive spacing
             ],
           ),
         ),
@@ -67,17 +70,25 @@ class ResetPasswordView extends StatelessWidget {
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          style: h4.copyWith(fontSize: 12, color: Colors.grey[600]),
+          style: h4.copyWith(fontSize: 12.sp, color: Colors.grey[600]), // Responsive font size
           children: [
-            TextSpan(text: 'By using Quranic Mastery you agree to our '),
+            const TextSpan(text: 'By using Quranic Mastery you agree to our '),
             TextSpan(
               text: 'Terms of Service',
-              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 12.sp, // Responsive font size
+                decoration: TextDecoration.underline,
+              ),
             ),
-            TextSpan(text: ' and '),
+            const TextSpan(text: ' and '),
             TextSpan(
               text: 'Privacy Policy',
-              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 12.sp, // Responsive font size
+                decoration: TextDecoration.underline,
+              ),
             ),
           ],
         ),

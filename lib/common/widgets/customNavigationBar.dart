@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../app/modules/dashboard/controllers/dashboard_controller.dart';
 import '../appColors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 
 class CustomNavigationBar extends StatelessWidget {
   final Function(int)? onItemTapped; // Optional callback for custom tap behavior
@@ -48,7 +49,7 @@ class CustomNavigationBar extends StatelessWidget {
         child: SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Use ScreenUtil for padding
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: navItems.asMap().entries.map((entry) {
@@ -65,25 +66,25 @@ class CustomNavigationBar extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w), // Use ScreenUtil for padding
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           item['icon']!,
-                          height: 24,
-                          width: 24,
+                          height: 24.sp, // Use ScreenUtil for icon size
+                          width: 24.sp, // Use ScreenUtil for icon size
                           colorFilter: ColorFilter.mode(
                             isActive ? AppColors.appColor : Colors.grey,
                             BlendMode.srcIn,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4.h), // Use ScreenUtil for spacing
                         Text(
                           item['label']!,
                           style: TextStyle(
                             color: isActive ? AppColors.appColor : Colors.grey,
-                            fontSize: 12,
+                            fontSize: 12.sp, // Use ScreenUtil for font size
                             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                           ),
                         ),

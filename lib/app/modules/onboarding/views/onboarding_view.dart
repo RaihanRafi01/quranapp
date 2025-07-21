@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/authentication/views/authentication_view.dart';
 import 'package:quranapp/app/modules/authentication/views/login_view.dart';
@@ -21,37 +22,43 @@ class OnboardingView extends GetView<OnboardingController> {
               child: Image.asset(
                 'assets/images/onboarding/onboarding_image.png',
                 fit: BoxFit.contain,
+                width: 300.w, // Responsive width
+                height: 300.h, // Responsive height
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(height: 50.h), // Responsive spacing
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w), // Responsive padding
               child: Column(
                 children: [
                   Text(
                     'Learn Languages From the Content You Love',
-                    style: h1.copyWith(fontSize: 24),
+                    style: h1, // Use h1 directly, as it has fontSize: 24.sp
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 50),
+                  SizedBox(height: 50.h), // Responsive spacing
                   CustomButton(
                     color: AppColors.btnClr1,
                     txtClr: AppColors.btnTxt1,
                     label: 'Get Started',
+                    width: double.infinity, // Full-width button
+                    height: 50.h, // Responsive height
                     onPressed: () {
-                      Get.to(AuthenticationView());
+                      Get.to(const AuthenticationView());
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h), // Responsive spacing
                   CustomButton(
                     txtClr: AppColors.btnTxt2,
                     color: AppColors.btnClr2,
                     label: 'I already have an account',
+                    width: double.infinity, // Full-width button
+                    height: 50.h, // Responsive height
                     onPressed: () {
-                      Get.to(LoginView());
+                      Get.to(const LoginView());
                     },
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h), // Responsive spacing
                 ],
               ),
             ),

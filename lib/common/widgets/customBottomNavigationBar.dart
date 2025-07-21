@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import '../appColors.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -35,7 +36,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Use ScreenUtil for padding
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -85,25 +86,25 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         _handleNavigation(index);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w), // Use ScreenUtil for padding
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             SvgPicture.asset(
               svgPath,
-              height: 24,
-              width: 24,
+              height: 24.sp, // Use ScreenUtil for icon size
+              width: 24.sp, // Use ScreenUtil for icon size
               colorFilter: ColorFilter.mode(
                 isActive ? AppColors.appColor : Colors.grey,
                 BlendMode.srcIn,
               ),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h), // Use ScreenUtil for spacing
             Text(
               label,
               style: TextStyle(
                 color: isActive ? AppColors.appColor : Colors.grey,
-                fontSize: 12,
+                fontSize: 12.sp, // Use ScreenUtil for font size
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
               ),
             ),

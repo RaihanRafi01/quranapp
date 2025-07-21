@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/common/appColors.dart';
@@ -12,11 +13,11 @@ class ProfilePopups {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => Container(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24.w), // Responsive padding
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,34 +27,42 @@ class ProfilePopups {
               children: [
                 Text(
                   'Avatar',
-                  style: h3.copyWith(fontSize: 18, color: Colors.black),
+                  style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: SvgPicture.asset(
                     'assets/images/settings/cancel_icon.svg',
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h), // Responsive spacing
             ListTile(
-              leading: const Icon(Icons.photo_camera, color: Colors.grey),
-              title: const Text('Take Photo'),
+              leading: Icon(Icons.photo_camera, color: Colors.grey, size: 24.sp), // Responsive icon size
+              title: Text(
+                'Take Photo',
+                style: TextStyle(fontSize: 16.sp), // Responsive font size
+              ),
               onTap: () {
                 Navigator.pop(context);
                 // Handle take photo
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo_library, color: Colors.grey),
-              title: const Text('Choose from Library'),
+              leading: Icon(Icons.photo_library, color: Colors.grey, size: 24.sp), // Responsive icon size
+              title: Text(
+                'Choose from Library',
+                style: TextStyle(fontSize: 16.sp), // Responsive font size
+              ),
               onTap: () {
                 Navigator.pop(context);
                 // Handle choose from library
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h), // Responsive spacing
           ],
         ),
       ),
@@ -68,15 +77,15 @@ class ProfilePopups {
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,38 +95,39 @@ class ProfilePopups {
                 children: [
                   Text(
                     'Name',
-                    style: h3.copyWith(fontSize: 18, color: Colors.black),
+                    style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: SvgPicture.asset(
                       'assets/images/settings/cancel_icon.svg',
-
+                      width: 24.w, // Responsive SVG width
+                      height: 24.h, // Responsive SVG height
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
               TextField(
                 controller: nameController,
                 decoration: InputDecoration(
                   hintText: 'Jamal',
-                  hintStyle: TextStyle(color: Colors.grey[400]),
+                  hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14.sp), // Responsive font size
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                    borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                    borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: AppColors.textBlue),
+                    borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                    borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
@@ -128,9 +138,11 @@ class ProfilePopups {
                   },
                   color: AppColors.btnClr1,
                   txtClr: AppColors.btnTxt1,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
             ],
           ),
         ),
@@ -146,15 +158,15 @@ class ProfilePopups {
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,76 +176,78 @@ class ProfilePopups {
                 children: [
                   Text(
                     'E-Mail',
-                    style: h3.copyWith(fontSize: 18, color: Colors.black),
+                    style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: SvgPicture.asset(
                       'assets/images/settings/cancel_icon.svg',
+                      width: 24.w, // Responsive SVG width
+                      height: 24.h, // Responsive SVG height
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Email',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]), // Responsive font size
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h), // Responsive spacing
                   TextField(
                     controller: emailController,
                     decoration: InputDecoration(
                       hintText: 'abc@email.com',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14.sp), // Responsive font size
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: AppColors.textBlue),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h), // Responsive spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Confirm Email',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]), // Responsive font size
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h), // Responsive spacing
                   TextField(
                     decoration: InputDecoration(
                       hintText: 'abc@email.com',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14.sp), // Responsive font size
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: AppColors.textBlue),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
@@ -244,9 +258,11 @@ class ProfilePopups {
                   },
                   color: AppColors.btnClr1,
                   txtClr: AppColors.btnTxt1,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
             ],
           ),
         ),
@@ -261,12 +277,12 @@ class ProfilePopups {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,19 +292,24 @@ class ProfilePopups {
                 children: [
                   Text(
                     'Select Your Gender',
-                    style: h3.copyWith(fontSize: 18, color: Colors.black),
+                    style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: SvgPicture.asset(
                       'assets/images/settings/cancel_icon.svg',
+                      width: 24.w, // Responsive SVG width
+                      height: 24.h, // Responsive SVG height
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
               RadioListTile<String>(
-                title: const Text('Male'),
+                title: Text(
+                  'Male',
+                  style: TextStyle(fontSize: 16.sp), // Responsive font size
+                ),
                 value: 'Male',
                 groupValue: selectedGender,
                 activeColor: AppColors.btnClr1,
@@ -299,7 +320,10 @@ class ProfilePopups {
                 },
               ),
               RadioListTile<String>(
-                title: const Text('Female'),
+                title: Text(
+                  'Female',
+                  style: TextStyle(fontSize: 16.sp), // Responsive font size
+                ),
                 value: 'Female',
                 groupValue: selectedGender,
                 activeColor: AppColors.btnClr1,
@@ -309,7 +333,7 @@ class ProfilePopups {
                   });
                 },
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
@@ -320,9 +344,11 @@ class ProfilePopups {
                   },
                   color: AppColors.btnClr1,
                   txtClr: AppColors.btnTxt1,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
             ],
           ),
         ),
@@ -340,15 +366,15 @@ class ProfilePopups {
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,106 +384,108 @@ class ProfilePopups {
                 children: [
                   Text(
                     'Password',
-                    style: h3.copyWith(fontSize: 18, color: Colors.black),
+                    style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: SvgPicture.asset(
                       'assets/images/settings/cancel_icon.svg',
+                      width: 24.w, // Responsive SVG width
+                      height: 24.h, // Responsive SVG height
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'New Password',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]), // Responsive font size
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h), // Responsive spacing
                   TextField(
                     controller: newPasswordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: AppColors.textBlue),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h), // Responsive spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Confirm',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]), // Responsive font size
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h), // Responsive spacing
                   TextField(
                     controller: confirmPasswordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: AppColors.textBlue),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h), // Responsive spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Password',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]), // Responsive font size
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h), // Responsive spacing
                   TextField(
                     controller: currentPasswordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: '●●●●●●●●',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14.sp), // Responsive font size
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: Colors.grey[300]!, width: 1.w), // Responsive border width
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: AppColors.textBlue),
+                        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
+                        borderSide: BorderSide(color: AppColors.textBlue, width: 1.w), // Responsive border width
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
@@ -468,9 +496,11 @@ class ProfilePopups {
                   },
                   color: AppColors.btnClr1,
                   txtClr: AppColors.btnTxt1,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
             ],
           ),
         ),
@@ -483,12 +513,12 @@ class ProfilePopups {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => Container(
-        padding: const EdgeInsets.all(24),
-        height: 300,
+        padding: EdgeInsets.all(24.w), // Responsive padding
+        height: 300.h, // Responsive height
         child: Column(
           children: [
             Row(
@@ -496,17 +526,19 @@ class ProfilePopups {
               children: [
                 Text(
                   'Select Time',
-                  style: h3.copyWith(fontSize: 18, color: Colors.black),
+                  style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: SvgPicture.asset(
                     'assets/images/settings/cancel_icon.svg',
+                    width: 24.w, // Responsive SVG width
+                    height: 24.h, // Responsive SVG height
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h), // Responsive spacing
             Expanded(
               child: Row(
                 children: [
@@ -514,17 +546,20 @@ class ProfilePopups {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('H', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          'H',
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold), // Responsive font size
+                        ),
                         Expanded(
                           child: ListWheelScrollView.useDelegate(
-                            itemExtent: 40,
+                            itemExtent: 40.h, // Responsive item extent
                             childDelegate: ListWheelChildBuilderDelegate(
                               builder: (context, index) {
                                 if (index < 0 || index > 23) return null;
                                 return Center(
                                   child: Text(
                                     index.toString().padLeft(2, '0'),
-                                    style: const TextStyle(fontSize: 20),
+                                    style: TextStyle(fontSize: 20.sp), // Responsive font size
                                   ),
                                 );
                               },
@@ -538,17 +573,20 @@ class ProfilePopups {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('M', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          'M',
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold), // Responsive font size
+                        ),
                         Expanded(
                           child: ListWheelScrollView.useDelegate(
-                            itemExtent: 40,
+                            itemExtent: 40.h, // Responsive item extent
                             childDelegate: ListWheelChildBuilderDelegate(
                               builder: (context, index) {
                                 if (index < 0 || index > 59) return null;
                                 return Center(
                                   child: Text(
                                     index.toString().padLeft(2, '0'),
-                                    style: const TextStyle(fontSize: 20),
+                                    style: TextStyle(fontSize: 20.sp), // Responsive font size
                                   ),
                                 );
                               },
@@ -562,13 +600,18 @@ class ProfilePopups {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          '',
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold), // Responsive font size
+                        ),
                         Expanded(
                           child: ListWheelScrollView(
-                            itemExtent: 40,
-                            children: const [
-                              Center(child: Text('AM', style: TextStyle(fontSize: 20))),
-                              Center(child: Text('PM', style: TextStyle(fontSize: 20))),
+                            itemExtent: 40.h, // Responsive item extent
+                            children: [
+                              Center(
+                                  child: Text('AM', style: TextStyle(fontSize: 20.sp))), // Responsive font size
+                              Center(
+                                  child: Text('PM', style: TextStyle(fontSize: 20.sp))), // Responsive font size
                             ],
                           ),
                         ),
@@ -578,7 +621,7 @@ class ProfilePopups {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h), // Responsive spacing
             SizedBox(
               width: double.infinity,
               child: CustomButton(
@@ -589,6 +632,8 @@ class ProfilePopups {
                 },
                 color: AppColors.btnClr1,
                 txtClr: AppColors.btnTxt1,
+                width: double.infinity, // Full-width button
+                height: 50.h, // Responsive height
               ),
             ),
           ],
@@ -605,12 +650,12 @@ class ProfilePopups {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)), // Responsive border radius
       ),
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w), // Responsive padding
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -620,19 +665,24 @@ class ProfilePopups {
                 children: [
                   Text(
                     'Daily Goal',
-                    style: h3.copyWith(fontSize: 18, color: Colors.black),
+                    style: h3.copyWith(fontSize: 18.sp, color: Colors.black), // Responsive font size
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: SvgPicture.asset(
                       'assets/images/settings/cancel_icon.svg',
+                      width: 24.w, // Responsive SVG width
+                      height: 24.h, // Responsive SVG height
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
               ...goals.map((goal) => RadioListTile<String>(
-                title: Text(goal),
+                title: Text(
+                  goal,
+                  style: TextStyle(fontSize: 16.sp), // Responsive font size
+                ),
                 value: goal,
                 groupValue: selectedGoal,
                 activeColor: AppColors.btnClr1,
@@ -642,7 +692,7 @@ class ProfilePopups {
                   });
                 },
               )).toList(),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h), // Responsive spacing
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
@@ -653,9 +703,11 @@ class ProfilePopups {
                   },
                   color: AppColors.btnClr1,
                   txtClr: AppColors.btnTxt1,
+                  width: double.infinity, // Full-width button
+                  height: 50.h, // Responsive height
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h), // Responsive spacing
             ],
           ),
         ),

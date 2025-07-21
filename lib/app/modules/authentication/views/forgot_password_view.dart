@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../common/appColors.dart';
 import '../../../../common/customFont.dart';
 import '../../../../common/widgets/customButton.dart';
@@ -21,29 +21,29 @@ class ForgotPasswordEmailView extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.w), // Responsive padding
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height -
                       MediaQuery.of(context).padding.top -
-                      60, // Reserve space for terms
+                      60.h, // Responsive height for terms
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 60),
+                    SizedBox(height: 60.h), // Responsive spacing
                     Text(
                       'Forgot password',
-                      style: h1.copyWith(fontSize: 28, fontWeight: FontWeight.bold),
+                      style: h1,// Uses h1 with fontSize: 24.sp
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 40.h), // Responsive spacing
                     CustomTextField(
                       hintText: 'Enter your email',
                       controller: controller.emailController,
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) => controller.email.value = value,
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 24.h), // Responsive spacing
                     Obx(() => CustomButton(
                       label: 'Continue',
                       onPressed: controller.email.value.isNotEmpty
@@ -53,14 +53,16 @@ class ForgotPasswordEmailView extends StatelessWidget {
                           ? AppColors.btnClr1
                           : AppColors.btnClr2,
                       txtClr: AppColors.btnTxt1,
+                      width: double.infinity, // Full-width button
+                      height: 50.h, // Responsive height
                     )),
-                    SizedBox(height: 32),
+                    SizedBox(height: 32.h), // Responsive spacing
                     _buildDivider(),
-                    SizedBox(height: 24),
+                    SizedBox(height: 24.h), // Responsive spacing
                     _buildSocialButtons(controller),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h), // Responsive spacing
                     _buildSignUpLink(controller),
-                    SizedBox(height: 100), // Provide space so content scrolls above the terms
+                    SizedBox(height: 100.h), // Responsive spacing for terms
                   ],
                 ),
               ),
@@ -71,7 +73,7 @@ class ForgotPasswordEmailView extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h), // Responsive padding
                 child: _buildTermsText(),
               ),
             ),
@@ -81,14 +83,13 @@ class ForgotPasswordEmailView extends StatelessWidget {
     );
   }
 
-
   Widget _buildDivider() {
     return Row(
       children: [
         Expanded(child: Divider(color: Colors.grey[300])),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Or', style: h4.copyWith(fontSize: 14, color: Colors.grey[600])),
+          padding: EdgeInsets.symmetric(horizontal: 16.w), // Responsive padding
+          child: Text('Or', style: h4.copyWith(fontSize: 14.sp, color: Colors.grey[600])), // Responsive font size
         ),
         Expanded(child: Divider(color: Colors.grey[300])),
       ],
@@ -99,7 +100,7 @@ class ForgotPasswordEmailView extends StatelessWidget {
     return Column(
       children: [
         _buildSocialButton(controller.signInWithApple, 'assets/images/auth/apple_icon.svg', 'Continue with Apple'),
-        SizedBox(height: 12),
+        SizedBox(height: 12.h), // Responsive spacing
         _buildSocialButton(controller.signInWithGoogle, 'assets/images/auth/google_icon.svg', 'Continue with Google'),
       ],
     );
@@ -107,11 +108,11 @@ class ForgotPasswordEmailView extends StatelessWidget {
 
   Widget _buildSocialButton(VoidCallback onPressed, String assetPath, String label) {
     return Container(
-      height: 50,
+      height: 50.h, // Responsive height
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.textColor),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r), // Responsive border radius
       ),
       child: ElevatedButton(
         onPressed: onPressed,
@@ -119,16 +120,16 @@ class ForgotPasswordEmailView extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: AppColors.textColor,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)), // Responsive border radius
           padding: EdgeInsets.zero,
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Center(child: Text(label, style: h3.copyWith(fontSize: 16, color: AppColors.textColor))),
+            Center(child: Text(label, style: h3.copyWith(fontSize: 16.sp, color: AppColors.textColor))), // Responsive font size
             Positioned(
-              left: 16,
-              child: SvgPicture.asset(assetPath, height: 20, width: 20),
+              left: 16.w, // Responsive positioning
+              child: SvgPicture.asset(assetPath, height: 20.h, width: 20.w), // Responsive SVG size
             ),
           ],
         ),
@@ -141,10 +142,10 @@ class ForgotPasswordEmailView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Already signed up? ", style: h2.copyWith(fontSize: 16, color: AppColors.textColor)),
+          Text("Already signed up? ", style: h2.copyWith(fontSize: 16.sp, color: AppColors.textColor)), // Responsive font size
           GestureDetector(
             onTap: () => controller.goToLogin(),
-            child: Text('Log In', style: h2.copyWith(fontSize: 16, color: AppColors.textBlue)),
+            child: Text('Log In', style: h2.copyWith(fontSize: 16.sp, color: AppColors.textBlue)), // Responsive font size
           ),
         ],
       ),
@@ -156,17 +157,17 @@ class ForgotPasswordEmailView extends StatelessWidget {
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          style: h4.copyWith(fontSize: 12, color: Colors.grey[600]),
+          style: h4.copyWith(fontSize: 12.sp, color: Colors.grey[600]), // Responsive font size
           children: [
-            TextSpan(text: 'By using Quranic Mastery you agree to our '),
+            const TextSpan(text: 'By using Quranic Mastery you agree to our '),
             TextSpan(
               text: 'Terms of Service',
-              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+              style: TextStyle(color: Colors.blue, fontSize: 12.sp, decoration: TextDecoration.underline), // Responsive font size
             ),
-            TextSpan(text: ' and '),
+            const TextSpan(text: ' and '),
             TextSpan(
               text: 'Privacy Policy',
-              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+              style: TextStyle(color: Colors.blue, fontSize: 12.sp, decoration: TextDecoration.underline), // Responsive font size
             ),
           ],
         ),
