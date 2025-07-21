@@ -6,11 +6,53 @@ class SetupProfileController extends GetxController {
   var selectedLanguage = ''.obs;
   var selectedGoals = <String>[].obs;
   var selectedGoalStep = <int, String>{}.obs;
-
+  var statsMap = <int, Map<String, String>>{}.obs;
   void nextStep() {
-    if (currentStep.value < 7 && isStepValid()) {
+    if (currentStep.value < 7) {
+      print('Before increment: currentStep = ${currentStep.value}');
       currentStep.value++;
+      print('After increment: currentStep = ${currentStep.value}');
+    } else {
+      print('Cannot increment, already at max step: ${currentStep.value}');
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Initialize stats for each step and goal
+    statsMap.value = {
+      2: {
+        '15 minutes': '1500 Words\nGet Started. Understand 34% of the Quran',
+        '30 minutes': '2000 Words\nIntermediate. Understand 50% of the Quran',
+        '45 minutes': '2500 Words\nAdvanced. Understand 75% of the Quran',
+        '60 minutes': '3000 Words\nGood level. Understand 100% of the Quran',
+      },
+      3: {
+        '15 minutes': '1500 Words\nGet Started. Understand 34% of the Quran',
+        '30 minutes': '2000 Words\nIntermediate. Understand 50% of the Quran',
+        '45 minutes': '2500 Words\nAdvanced. Understand 75% of the Quran',
+        '60 minutes': '3000 Words\nGood level. Understand 100% of the Quran',
+      },
+      4: {
+        '15 minutes': '1500 Words\nBeginner. Understand 34% of the Quran',
+        '30 minutes': '2000 Words\nIntermediate. Understand 50% of the Quran',
+        '45 minutes': '2500 Words\nAdvanced. Understand 75% of the Quran',
+        '60 minutes': '3000 Words\nGood level. Understand 100% of the Quran',
+      },
+      5: {
+        '15 minutes': '1500 Words\nBeginner. Understand 34% of the Quran',
+        '30 minutes': '2000 Words\nIntermediate. Understand 50% of the Quran',
+        '45 minutes': '2500 Words\nAdvanced. Understand 75% of the Quran',
+        '60 minutes': '3000 Words\nGood level. Understand 100% of the Quran',
+      },
+      6: {
+        '15 minutes': '1500 Words\nJoin the community with basic understanding',
+        '30 minutes': '2000 Words\nEngage with intermediate community insights',
+        '45 minutes': '2500 Words\nContribute to community discussions',
+        '60 minutes': '3000 Words\nBe a leader in community opinions and writings',
+      },
+    };
   }
 
   void previousStep() {
@@ -42,6 +84,14 @@ class SetupProfileController extends GetxController {
       default:
         return true;
     }
+  }
+  String getStatsForStep(int step) {
+    if (step == 1) {
+      // Step 2/8 has fixed stats
+      return '';
+    }
+    final selectedGoal = selectedGoalStep[step] ?? '';
+    return statsMap[step]?[selectedGoal] ??  '2500 Words\nAdvanced. Understand 75% of the Quran';
   }
 
   void completeOnboarding() {

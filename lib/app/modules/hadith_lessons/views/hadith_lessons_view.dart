@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/video_lessons/views/videoPlayer_view.dart';
+import 'package:quranapp/app/modules/vocabulary/views/vocabulary_view.dart';
 import 'package:quranapp/common/customFont.dart';
 
 import '../../../../common/appColors.dart';
@@ -95,7 +96,9 @@ class HadithLessonsView extends StatelessWidget {
                           child: SvgPicture.asset(
                               'assets/images/lessons/video_icon.svg')),
                   SvgPicture.asset('assets/images/lessons/sentence_icon.svg'),
-                  SvgPicture.asset('assets/images/lessons/book_icon.svg'),
+                  GestureDetector(
+                    onTap: ()=> Get.to(VocabularyView(initialTabIndex: 1,)),
+                      child: SvgPicture.asset('assets/images/lessons/book_icon.svg')),
                 ],
               ),
             ),

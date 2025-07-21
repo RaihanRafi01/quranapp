@@ -11,34 +11,50 @@ class SetupProfileView extends GetView<SetupProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SetupProfileController());
-    return Scaffold(
+    return Obx(() => Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Obx(() => SingleChildScrollView(child: _buildCurrentScreen())),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildCurrentScreen(),
+            ],
+          ),
+        ),
       ),
-      bottomNavigationBar: Obx(() => BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
         child: CustomButton(
           label: 'Continue',
-          onPressed: controller.currentStep.value == 7
-              ? controller.completeOnboarding
-              : controller.isStepValid()
-              ? controller.nextStep
-              : () {},
-          color: controller.currentStep.value == 7 || controller.isStepValid()
+          onPressed: () {
+            print('Button pressed, current step: ${controller.currentStep.value}');
+            if (controller.currentStep.value == 7) {
+              print('Completing onboarding');
+              controller.completeOnboarding();
+            } else if (controller.currentStep.value == 1) {
+              print('Moving from step 1 to step 2');
+              controller.nextStep();
+            } else if (controller.isStepValid()) {
+              print('Step ${controller.currentStep.value} is valid, moving to next');
+              controller.nextStep();
+            } else {
+              print('Step ${controller.currentStep.value} is invalid');
+            }
+          },
+          color: controller.currentStep.value == 7 || controller.currentStep.value == 1 || controller.isStepValid()
               ? AppColors.btnClr1
               : AppColors.btnClr2,
-          txtClr: controller.currentStep.value == 7 || controller.isStepValid()
+          txtClr: controller.currentStep.value == 7 || controller.currentStep.value == 1 || controller.isStepValid()
               ? AppColors.btnTxt1
               : AppColors.btnTxt2,
         ),
-      )),
-    );
+      ),
+    ));
   }
 
   Widget _buildCurrentScreen() {
+    print('Building screen for step: ${controller.currentStep.value}');
     switch (controller.currentStep.value) {
       case 0:
         return _buildLanguageScreen();
@@ -71,12 +87,14 @@ class SetupProfileView extends GetView<SetupProfileController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.back();
                 },
-                child: Text('< Back', style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
+                child: Text('< Back',
+                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
               ),
-              Text('1/8', style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
+              Text('1/8',
+                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
             ],
           ),
           const SizedBox(height: 40),
@@ -89,16 +107,23 @@ class SetupProfileView extends GetView<SetupProfileController> {
             ),
           ),
           const SizedBox(height: 40),
-          _buildLanguageOption('assets/images/flags/en_flag.png', 'Spanish', '300 million native speakers worldwide'),
+          _buildLanguageOption(
+              'assets/images/flags/en_flag.png',
+              'Spanish',
+              '300 million native speakers worldwide'),
           const SizedBox(height: 16),
-          _buildLanguageOption('assets/images/flags/de_flag.png', 'German', 'Most spoken native language in Europe'),
+          _buildLanguageOption(
+              'assets/images/flags/de_flag.png',
+              'German',
+              'Most spoken native language in Europe'),
           const SizedBox(height: 80), // Space to prevent content cutoff
         ],
       ),
     );
   }
 
-  Widget _buildLanguageOption(String imagePath, String language, String description) {
+  Widget _buildLanguageOption(
+      String imagePath, String language, String description) {
     bool isSelected = controller.selectedLanguage.value == language;
     return GestureDetector(
       onTap: () => controller.selectLanguage(language),
@@ -149,98 +174,14 @@ class SetupProfileView extends GetView<SetupProfileController> {
     );
   }
 
-  Widget _buildGoalScreen1() {
-    return _buildGoalScreenTemplate(
-      step: '2/8',
-      title: 'Learn Our basic Arabic for — with the Quran Memory App',
-      options: [
-        GoalOption('assets/images/goal/book_image.svg', 'Build a deep vocabulary', 'Learn by reading and listening to the Qur’an, Hadith, and Islamic movies. Learn Qur’anic Arabic naturally no grammar rules, no textbooks.', false),
-        GoalOption('assets/images/goal/listen_image.svg', 'Become a fluent listener', 'Listen until you understand the Qur’an, Hadith, and Islamic scholars without needing a translation. Master the Quranic Arabic language in just six months.', false),
-        GoalOption('assets/images/goal/fire_image.svg', 'Make Qur’anic learning a habit', 'Use daily goals, challenges & reminders to stay consistent. The Prophet ﷺ said: The best deeds are those done regularly, even if they are small.', false),
-      ],
-      stats: '1500 Words\nGet Started. Understand 34% of the Quran',
-      isStep2Layout: true,
-    );
-  }
-
-  Widget _buildGoalScreen2() {
-    return _buildGoalScreenTemplate(
-      step: '3/8',
-      title: 'How much time do you commit to learning Quran?',
-      options: [
-        GoalOption('', '15 minutes', 'Casual', false),
-        GoalOption('', '30 minutes', 'Regular', false),
-        GoalOption('', '45 minutes', 'Serious', false),
-        GoalOption('', '60 minutes', 'Intense', false),
-      ],
-      stats: '1500 Words\nGet Started. Understand 34% of the Quran',
-    );
-  }
-
-  Widget _buildGoalScreen3() {
-    return _buildGoalScreenTemplate(
-      step: '4/8',
-      title: 'Why are learning do you commit to learning Quran?',
-      options: [
-        GoalOption('', '15 minutes', 'Casual', false),
-        GoalOption('', '30 minutes', 'Regular', false),
-        GoalOption('', '45 minutes', 'Serious', false),
-        GoalOption('', '60 minutes', 'Intense', false),
-      ],
-      stats: '2000 Words\nIntermediate. Understand 67% of the Quran',
-    );
-  }
-
-  Widget _buildGoalScreen4() {
-    return _buildGoalScreenTemplate(
-      step: '5/8',
-      title: 'Why much time do you commit to learning Quran?',
-      options: [
-        GoalOption('', '15 minutes', 'Casual', false),
-        GoalOption('', '30 minutes', 'Regular', false),
-        GoalOption('', '45 minutes', 'Serious', false),
-        GoalOption('', '60 minutes', 'Intense', false),
-      ],
-      stats: '3000 Words\nGood level. Understand 100% of the Quran',
-    );
-  }
-
-  Widget _buildGoalScreen5() {
-    return _buildGoalScreenTemplate(
-      step: '6/8',
-      title: 'How much time do you commit to learning Quran?',
-      options: [
-        GoalOption('', '15 minutes', 'Casual', false),
-        GoalOption('', '30 minutes', 'Regular', false),
-        GoalOption('', '45 minutes', 'Serious', false),
-        GoalOption('', '60 minutes', 'Intense', false),
-      ],
-      stats: '3000 Words\nGood level. Understand 100% of the Quran',
-    );
-  }
-
-  Widget _buildGoalScreen6() {
-    return _buildGoalScreenTemplate(
-      step: '7/8',
-      title: 'How much time do you commit to learning Quran?',
-      options: [
-        GoalOption('', '15 minutes', 'Casual', false),
-        GoalOption('', '30 minutes', 'Regular', false),
-        GoalOption('', '45 minutes', 'Serious', false),
-        GoalOption('', '60 minutes', 'Intense', false),
-      ],
-      stats: '3000 Words\nEverything There is better. Be part of the community and join us in children opinions and writings.',
-    );
-  }
 
   Widget _buildGoalScreenTemplate({
     required String step,
     required String title,
     required List<GoalOption> options,
-    required String stats,
     bool isStep2Layout = false,
   }) {
-    return Padding(
+    return Obx(() => Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,9 +191,11 @@ class SetupProfileView extends GetView<SetupProfileController> {
             children: [
               GestureDetector(
                 onTap: controller.previousStep,
-                child: Text('< Back', style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
+                child: Text('< Back',
+                    style: h3.copyWith(color: AppColors.textBlue, fontSize: 16)),
               ),
-              Text(step, style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
+              Text(step,
+                  style: h1.copyWith(color: AppColors.textColor, fontSize: 20)),
             ],
           ),
           const SizedBox(height: 40),
@@ -278,7 +221,7 @@ class SetupProfileView extends GetView<SetupProfileController> {
           Center(
             child: Text(
               textAlign: TextAlign.center,
-              stats,
+              controller.getStatsForStep(controller.currentStep.value),
               style: h3.copyWith(
                 fontSize: 16,
                 color: AppColors.textColor,
@@ -288,6 +231,95 @@ class SetupProfileView extends GetView<SetupProfileController> {
           const SizedBox(height: 80), // Space to prevent content cutoff
         ],
       ),
+    ));
+  }
+  Widget _buildGoalScreen1() {
+    return _buildGoalScreenTemplate(
+      step: '2/8',
+      title: 'Learn Our basic Arabic for — with the Quran Memory App',
+      options: [
+        GoalOption(
+            'assets/images/goal/book_image.svg',
+            'Build a deep vocabulary',
+            'Learn by reading and listening to the Qur’an, Hadith, and Islamic movies. Learn Qur’anic Arabic naturally no grammar rules, no textbooks.',
+            false),
+        GoalOption(
+            'assets/images/goal/listen_image.svg',
+            'Become a fluent listener',
+            'Listen until you understand the Qur’an, Hadith, and Islamic scholars without needing a translation. Master the Quranic Arabic language in just six months.',
+            false),
+        GoalOption(
+            'assets/images/goal/fire_image.svg',
+            'Make Qur’anic learning a habit',
+            'Use daily goals, challenges & reminders to stay consistent. The Prophet ﷺ said: The best deeds are those done regularly, even if they are small.',
+            false),
+      ],
+      isStep2Layout: true,
+    );
+  }
+
+  Widget _buildGoalScreen2() {
+    return _buildGoalScreenTemplate(
+      step: '3/8',
+      title: 'How much time do you commit to learning Quran?',
+      options: [
+        GoalOption('', '15 minutes', 'Casual', false),
+        GoalOption('', '30 minutes', 'Regular', false),
+        GoalOption('', '45 minutes', 'Serious', false),
+        GoalOption('', '60 minutes', 'Intense', false),
+      ],
+    );
+  }
+
+  Widget _buildGoalScreen3() {
+    return _buildGoalScreenTemplate(
+      step: '4/8',
+      title: 'Why are you learning to commit to learning Quran?',
+      options: [
+        GoalOption('', '15 minutes', 'Casual', false),
+        GoalOption('', '30 minutes', 'Regular', false),
+        GoalOption('', '45 minutes', 'Serious', false),
+        GoalOption('', '60 minutes', 'Intense', false),
+      ],
+    );
+  }
+
+  Widget _buildGoalScreen4() {
+    return _buildGoalScreenTemplate(
+      step: '5/8',
+      title: 'How much time do you commit to learning Quran?',
+      options: [
+        GoalOption('', '15 minutes', 'Casual', false),
+        GoalOption('', '30 minutes', 'Regular', false),
+        GoalOption('', '45 minutes', 'Serious', false),
+        GoalOption('', '60 minutes', 'Intense', false),
+      ],
+    );
+  }
+
+  Widget _buildGoalScreen5() {
+    return _buildGoalScreenTemplate(
+      step: '6/8',
+      title: 'How much time do you commit to learning Quran?',
+      options: [
+        GoalOption('', '15 minutes', 'Casual', false),
+        GoalOption('', '30 minutes', 'Regular', false),
+        GoalOption('', '45 minutes', 'Serious', false),
+        GoalOption('', '60 minutes', 'Intense', false),
+      ],
+    );
+  }
+
+  Widget _buildGoalScreen6() {
+    return _buildGoalScreenTemplate(
+      step: '7/8',
+      title: 'How much time do you commit to learning Quran?',
+      options: [
+        GoalOption('', '15 minutes', 'Casual', false),
+        GoalOption('', '30 minutes', 'Regular', false),
+        GoalOption('', '45 minutes', 'Serious', false),
+        GoalOption('', '60 minutes', 'Intense', false),
+      ],
     );
   }
 
@@ -357,56 +389,50 @@ class SetupProfileView extends GetView<SetupProfileController> {
 
   Widget _buildGoalOptionStep2(GoalOption option, int step) {
     bool isSelected = controller.selectedGoalStep[step] == option.title;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: GestureDetector(
-        onTap: () => controller.selectGoal(option.title, step),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.borderClr,
-              width: isSelected ? 2 : 1,
-            ),
-            borderRadius: BorderRadius.circular(12),
-            color: isSelected ? AppColors.btnClr3 : Colors.white,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SvgPicture.asset(
-                option.icon,
-                width: 24,
-                height: 24,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      option.title,
-                      style: h3.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      option.description,
-                      style: h3.copyWith(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                      softWrap: true,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.borderClr,
+          width: isSelected ? 2 : 1,
         ),
+        borderRadius: BorderRadius.circular(12),
+        color: isSelected ? AppColors.btnClr3 : Colors.white,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset(
+            option.icon,
+            width: 24,
+            height: 24,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  option.title,
+                  style: h3.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  option.description,
+                  style: h3.copyWith(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                  softWrap: true,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -466,5 +492,7 @@ class GoalOption {
   final String level;
   final bool isSelected;
 
-  GoalOption(this.icon, this.title, this.description, this.isSelected, [this.level = '']);
+
+  GoalOption(this.icon, this.title, this.description, this.isSelected,
+      [this.level = '']);
 }

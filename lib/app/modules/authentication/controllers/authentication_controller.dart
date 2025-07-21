@@ -5,6 +5,7 @@ import 'package:quranapp/app/modules/authentication/views/login_view.dart';
 import 'package:quranapp/app/modules/home/views/home_view.dart';
 import 'package:quranapp/app/modules/setup_profile/views/setup_profile_view.dart';
 
+import '../../setup_profile/controllers/setup_profile_controller.dart';
 import '../views/forgot_password_view.dart';
 
 class AuthenticationController extends GetxController {
@@ -171,7 +172,7 @@ class AuthenticationController extends GetxController {
       backgroundColor: Colors.green,
       colorText: Colors.white,
     );
-
+    Get.put(SetupProfileController());
     Get.to(SetupProfileView());
 
   }

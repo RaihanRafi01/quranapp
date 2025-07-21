@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quranapp/app/modules/leaderboards/views/leaderboards_view.dart';
+import 'package:quranapp/app/modules/vocabulary/views/main_vocabulary.dart';
 import 'package:quranapp/app/modules/vocabulary/views/vocabulary_view.dart';
 import 'package:quranapp/common/widgets/customNavigationBar.dart';
 import '../../../../common/appColors.dart';
@@ -30,7 +31,7 @@ class _DashboardViewState extends State<DashboardView> {
 
     final List<Widget> _screens = [
       const HomeView(),
-      const VocabularyView(),
+      const MainVocabularyView(),
       const LeaderboardsView(),
       const ProfileView(),
     ];

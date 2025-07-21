@@ -3,21 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
 import '../../../../common/appColors.dart';
+import '../../../../common/customFont.dart';
 import '../controllers/vocabulary_controller.dart';
 import 'vocabulary_settings_view.dart';
 
-class VocabularyView extends GetView<VocabularyController> {
-  final int initialTabIndex; // New parameter for initial tab index
+class MainVocabularyView extends GetView<VocabularyController> {
 
-  const VocabularyView({super.key, this.initialTabIndex = 0}); // Default to 0 if not provided
+  const MainVocabularyView({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Initialize the controller
     final VocabularyController vocabularyController = Get.put(VocabularyController());
 
-    // Set the initial tab index
-    vocabularyController.setSelectedTab(initialTabIndex);
 
     // Sample data for different tabs
     final List<Map<String, dynamic>> ourWeekWords = [
@@ -38,20 +36,11 @@ class VocabularyView extends GetView<VocabularyController> {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: const Text(
-          'Vocabulary',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -68,38 +57,8 @@ class VocabularyView extends GetView<VocabularyController> {
           Column(
             children: [
               // Custom Toggle Buttons
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    children: [
-                      _buildToggleButton(
-                        context,
-                        'Quiz Words',
-                        0,
-                        vocabularyController,
-                      ),
-                      _buildToggleButton(
-                        context,
-                        'Learned Words', // Fixed typo in label
-                        1,
-                        vocabularyController,
-                      ),
-                      _buildToggleButton(
-                        context,
-                        'All',
-                        2,
-                        vocabularyController,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              Text('Learned Words',style: h4.copyWith(fontSize: 20)),
+              SizedBox(height: 20,),
               // Vocabulary List
               Expanded(
                 child: Obx(() {
@@ -152,7 +111,7 @@ class VocabularyView extends GetView<VocabularyController> {
                         shadowColor: Colors.transparent,
                       ),
                       child: const Text(
-                        'Start Quiz',
+                        'Review',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -164,48 +123,38 @@ class VocabularyView extends GetView<VocabularyController> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildToggleButton(
-      BuildContext context,
-      String label,
-      int index,
-      VocabularyController controller,
-      ) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          controller.setSelectedTab(index);
-        },
-        child: Obx(() => Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: controller.selectedTab.value == index ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: controller.selectedTab.value == index
-                ? [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 1),
-              ),
-            ]
-                : [],
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: controller.selectedTab.value == index ? FontWeight.w600 : FontWeight.normal,
-                color: controller.selectedTab.value == index ? Colors.black : Colors.grey[600],
+          Positioned(
+            bottom: 90,
+            left: 16,
+            child: SafeArea(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width,
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  child: Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25), // Increased border radius for more rounding
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                        Icon(Icons.keyboard_arrow_left_outlined),
+                        Text('1/75'),
+                        Icon(Icons.keyboard_arrow_right_outlined),
+                      ],),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        )),
+        ],
       ),
     );
   }

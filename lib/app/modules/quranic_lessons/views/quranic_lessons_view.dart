@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:quranapp/app/modules/quiz/views/quiz_view.dart';
+import 'package:quranapp/app/modules/quranic_lessons/views/quranicLessonsSettings_view.dart';
+import 'package:quranapp/app/modules/vocabulary/views/vocabulary_view.dart';
 import '../../../../common/appColors.dart';
 import '../../../../common/customFont.dart';
 import '../controllers/quranic_lessons_controller.dart';
@@ -40,7 +43,11 @@ class QuranicLessonsView extends StatelessWidget {
                   onPressed: () => Get.back(),
                 ),
                 const Spacer(),
-                SvgPicture.asset('assets/images/home/settings_icon.svg')
+                GestureDetector(
+                  onTap: (){
+                    Get.to(QuranicLessonsSettingsView());
+                  },
+                    child: SvgPicture.asset('assets/images/home/settings_icon.svg'))
               ],
             ),
           ),
@@ -234,7 +241,9 @@ class QuranicLessonsView extends StatelessWidget {
           child: SvgPicture.asset('assets/images/lessons/word_icon.svg'),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(VocabularyView());
+          },
           child: SvgPicture.asset('assets/images/lessons/voca_icon.svg'),
         ),
       ],
